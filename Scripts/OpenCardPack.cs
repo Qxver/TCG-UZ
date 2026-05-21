@@ -1,8 +1,7 @@
 using Godot;
 using System;
 
-public partial class OpenCardPack : Node
-{
+public partial class OpenCardPack : Node{
 	[Export] public int CardsPerPack = 5;
 
 	public void OpenPack(){

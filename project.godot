@@ -10,10 +10,15 @@ config_version=5
 
 [application]
 
-config/name="KartUZ"
+config/name="TCG-UZ"
 run/main_scene="uid://lovn5wxdy13p"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+CardDatabase="*uid://5krr1rpt74qo"
+CardCollection="*uid://cnki6b22iljnx"
 
 [display]
 
