@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://5655vgf774ka"]
+
+[ext_resource type="Texture2D" uid="uid://baog5ug6jow28" path="res://Sprites/Card/Portraits/portrait_hladek.png" id="1_4fqie"]
+[ext_resource type="Script" uid="uid://cv2cr5vqvweel" path="res://Scripts/CardData.cs" id="2_c58po"]
+
+[resource]
+script = ExtResource("2_c58po")
+Id = "1"
+Name = "dr inż. Łukasz Hładowski"
+Description = "Haba haba"
+Artwork = ExtResource("1_4fqie")
+Rarity = 4
+Attack = 4
+Health = 7
+Cost = 3
