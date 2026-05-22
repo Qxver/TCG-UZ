@@ -17,6 +17,7 @@
 font_size = 8
 
 [node name="Card" type="Control" unique_id=206235274]
+custom_minimum_size = Vector2(60, 90)
 layout_mode = 3
 anchors_preset = 0
 
@@ -29,37 +30,36 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="OuterOutline" type="Sprite2D" parent="FrontFace" unique_id=284282671]
+position = Vector2(30, 44)
 texture = ExtResource("1_pbuqb")
 
 [node name="InnerColor" type="Sprite2D" parent="FrontFace" unique_id=1452493502]
 modulate = Color(0.095231034, 0.42148873, 0.42772853, 1)
 material = SubResource("CanvasItemMaterial_bnspj")
+position = Vector2(30, 44)
 texture = ExtResource("2_f3ywt")
 
 [node name="OuterSpacer" type="Sprite2D" parent="FrontFace" unique_id=2074975591]
+position = Vector2(30, 44)
 texture = ExtResource("3_6elyo")
 
 [node name="Portrait" type="Sprite2D" parent="FrontFace" unique_id=513252976]
+position = Vector2(30, 44)
 texture = ExtResource("4_gnfes")
 
 [node name="Stats" type="Control" parent="." unique_id=2012697584]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 
 [node name="StatsSprite" type="Sprite2D" parent="Stats" unique_id=67329389]
-position = Vector2(0, 5)
+position = Vector2(30, 49)
 texture = ExtResource("5_swj2d")
 
 [node name="CostLabel" type="Label" parent="Stats" unique_id=503728683]
 layout_mode = 0
-offset_left = -4.0
-offset_top = 28.0
-offset_right = 5.0
-offset_bottom = 40.0
+offset_left = 26.0
+offset_top = 72.0
+offset_right = 35.0
+offset_bottom = 84.0
 text = "6"
 label_settings = SubResource("LabelSettings_sj14m")
 horizontal_alignment = 1
@@ -67,10 +67,10 @@ vertical_alignment = 1
 
 [node name="HealthLabel" type="Label" parent="Stats" unique_id=332256912]
 layout_mode = 0
-offset_left = 6.0
-offset_top = 28.0
-offset_right = 17.0
-offset_bottom = 40.0
+offset_left = 36.0
+offset_top = 72.0
+offset_right = 47.0
+offset_bottom = 84.0
 text = "7"
 label_settings = SubResource("LabelSettings_sj14m")
 horizontal_alignment = 1
@@ -78,10 +78,10 @@ vertical_alignment = 1
 
 [node name="AttackLabel" type="Label" parent="Stats" unique_id=498907971]
 layout_mode = 0
-offset_left = -17.0
-offset_top = 28.0
-offset_right = -6.0
-offset_bottom = 40.0
+offset_left = 13.0
+offset_top = 72.0
+offset_right = 24.0
+offset_bottom = 84.0
 text = "7"
 label_settings = SubResource("LabelSettings_sj14m")
 horizontal_alignment = 1
@@ -98,16 +98,21 @@ grow_vertical = 2
 
 [node name="InnerColor" type="Sprite2D" parent="RearFace" unique_id=1231885521]
 modulate = Color(0.55336356, 0.5714368, 0.5504175, 1)
+position = Vector2(30, 45)
 texture = ExtResource("6_co2vc")
 
 [node name="OuterOutline" type="Sprite2D" parent="RearFace" unique_id=727764830]
+position = Vector2(30, 45)
 texture = ExtResource("7_tayg5")
 
 [node name="OuterSpacer" type="Sprite2D" parent="RearFace" unique_id=79992975]
+position = Vector2(30, 45)
 texture = ExtResource("8_w84x6")
 
 [node name="BackDecorationU" type="Sprite2D" parent="RearFace" unique_id=1727683226]
+position = Vector2(30, 45)
 texture = ExtResource("9_7qgfu")
 
 [node name="BackDecorationZ" type="Sprite2D" parent="RearFace" unique_id=1333014642]
+position = Vector2(30, 45)
 texture = ExtResource("10_bnn6f")

@@ -33,7 +33,7 @@ public partial class CollectionMenu : Control
 			var stats = card.GetNodeOrNull<Node>("Stats");
 			var rearFace = card.GetNodeOrNull<Node>("RearFace");
 
-			var portrait = card.GetNodeOrNull<Sprite2D>("FrontFace/OuterOutline/OuterColor/OuterSpace/Portrait");
+			var portrait = card.GetNodeOrNull<Sprite2D>("FrontFace/Portrait");
 
 			if (portrait != null)
 			{
