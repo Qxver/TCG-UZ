@@ -52,12 +52,11 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "COLLECTION"
 
 [node name="Button2" type="Button" parent="VBoxContainer" unique_id=149876383]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-text = "OPTIONS"
+text = "add card test"
 
 [node name="Button3" type="Button" parent="VBoxContainer" unique_id=297077686]
 visible = false
@@ -68,3 +67,4 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "EXIT"
 
 [connection signal="pressed" from="VBoxContainer/CollectionButton" to="." method="_on_collection_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]

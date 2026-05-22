@@ -8,7 +8,7 @@ public partial class CardCollection : Node
 
 	private Dictionary<string, int> cards = new();
 
-	private const string SAVE_PATH = "res://Saves//collection.save";
+	private const string SAVE_PATH = "user://Saves/collection.save";
 
 	public override void _Ready()
 	{

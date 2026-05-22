@@ -8,6 +8,11 @@ public partial class MainMenu : Control
 		GetTree().ChangeSceneToFile("res://Scenes/CardCollection.tscn");
 	}
 	
+	public void _on_button_2_pressed()
+	{
+		CardCollection.Instance.AddCard(CardDatabase.Instance.AllCards[0]);
+	}
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

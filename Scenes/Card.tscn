@@ -21,7 +21,12 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="FrontFace" type="Control" parent="." unique_id=1834250423]
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="OuterOutline" type="Sprite2D" parent="FrontFace" unique_id=284282671]
 texture = ExtResource("1_pbuqb")
@@ -38,7 +43,12 @@ texture = ExtResource("3_6elyo")
 texture = ExtResource("4_gnfes")
 
 [node name="Stats" type="Control" parent="." unique_id=2012697584]
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="StatsSprite" type="Sprite2D" parent="Stats" unique_id=67329389]
 position = Vector2(0, 5)
@@ -54,7 +64,6 @@ text = "6"
 label_settings = SubResource("LabelSettings_sj14m")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="HealthLabel" type="Label" parent="Stats" unique_id=332256912]
 layout_mode = 0
@@ -66,7 +75,6 @@ text = "7"
 label_settings = SubResource("LabelSettings_sj14m")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="AttackLabel" type="Label" parent="Stats" unique_id=498907971]
 layout_mode = 0
@@ -78,11 +86,15 @@ text = "7"
 label_settings = SubResource("LabelSettings_sj14m")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="RearFace" type="Control" parent="." unique_id=168671250]
 visible = false
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="InnerColor" type="Sprite2D" parent="RearFace" unique_id=1231885521]
 modulate = Color(0.55336356, 0.5714368, 0.5504175, 1)
