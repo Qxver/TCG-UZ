@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://bs1teaxiy4lfk"]
+
+[ext_resource type="Texture2D" uid="uid://b106ewb5t4ayw" path="res://Sprites/Card/Front/card_front_outer_border.png" id="1_pbuqb"]
+[ext_resource type="Texture2D" uid="uid://c243g6g1mi2wj" path="res://Sprites/Card/Front/card_color.png" id="2_f3ywt"]
+[ext_resource type="Texture2D" uid="uid://dl0jav7svlf86" path="res://Sprites/Card/Front/card_front_outer_spacer.png" id="3_6elyo"]
+[ext_resource type="Texture2D" uid="uid://dbbgy8ldpt60j" path="res://Sprites/Card/FullArts/l2_sprite_1.png" id="4_gnfes"]
+[ext_resource type="Texture2D" uid="uid://c3k4edylru4j3" path="res://Sprites/Card/Front/Stats.png" id="5_swj2d"]
+[ext_resource type="Texture2D" uid="uid://c64mbwcvpi7s7" path="res://Sprites/Card/Back/card_back_color.png" id="6_co2vc"]
+[ext_resource type="Texture2D" uid="uid://c0mw1w6kg81df" path="res://Sprites/Card/Back/card_back_outer_border.png" id="7_tayg5"]
+[ext_resource type="Texture2D" uid="uid://b8s31bd8hqrmb" path="res://Sprites/Card/Back/card_back_outer_spacer.png" id="8_w84x6"]
+[ext_resource type="Texture2D" uid="uid://cn8vri43py8nl" path="res://Sprites/Card/Back/U_positioned.png" id="9_7qgfu"]
+[ext_resource type="Texture2D" uid="uid://dnlrcp41v65de" path="res://Sprites/Card/Back/Z_positioned.png" id="10_bnn6f"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bnspj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sj14m"]
+font_size = 8
+
+[node name="Card" type="Control" unique_id=206235274]
+custom_minimum_size = Vector2(60, 90)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="FrontFace" type="Control" parent="." unique_id=1834250423]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OuterOutline" type="Sprite2D" parent="FrontFace" unique_id=284282671]
+position = Vector2(30, 44)
+texture = ExtResource("1_pbuqb")
+
+[node name="InnerColor" type="Sprite2D" parent="FrontFace" unique_id=1452493502]
+modulate = Color(0.095231034, 0.42148873, 0.42772853, 1)
+material = SubResource("CanvasItemMaterial_bnspj")
+position = Vector2(30, 44)
+texture = ExtResource("2_f3ywt")
+
+[node name="OuterSpacer" type="Sprite2D" parent="FrontFace" unique_id=2074975591]
+position = Vector2(30, 44)
+texture = ExtResource("3_6elyo")
+
+[node name="Portrait" type="Sprite2D" parent="FrontFace" unique_id=513252976]
+position = Vector2(30, 44)
+texture = ExtResource("4_gnfes")
+
+[node name="Stats" type="Control" parent="." unique_id=2012697584]
+anchors_preset = 0
+
+[node name="StatsSprite" type="Sprite2D" parent="Stats" unique_id=67329389]
+position = Vector2(30, 49)
+texture = ExtResource("5_swj2d")
+
+[node name="CostLabel" type="Label" parent="Stats" unique_id=503728683]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 72.0
+offset_right = 35.0
+offset_bottom = 84.0
+text = "6"
+label_settings = SubResource("LabelSettings_sj14m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthLabel" type="Label" parent="Stats" unique_id=332256912]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 72.0
+offset_right = 47.0
+offset_bottom = 84.0
+text = "7"
+label_settings = SubResource("LabelSettings_sj14m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttackLabel" type="Label" parent="Stats" unique_id=498907971]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 72.0
+offset_right = 24.0
+offset_bottom = 84.0
+text = "7"
+label_settings = SubResource("LabelSettings_sj14m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RearFace" type="Control" parent="." unique_id=168671250]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InnerColor" type="Sprite2D" parent="RearFace" unique_id=1231885521]
+modulate = Color(0.55336356, 0.5714368, 0.5504175, 1)
+position = Vector2(30, 45)
+texture = ExtResource("6_co2vc")
+
+[node name="OuterOutline" type="Sprite2D" parent="RearFace" unique_id=727764830]
+position = Vector2(30, 45)
+texture = ExtResource("7_tayg5")
+
+[node name="OuterSpacer" type="Sprite2D" parent="RearFace" unique_id=79992975]
+position = Vector2(30, 45)
+texture = ExtResource("8_w84x6")
+
+[node name="BackDecorationU" type="Sprite2D" parent="RearFace" unique_id=1727683226]
+position = Vector2(30, 45)
+texture = ExtResource("9_7qgfu")
+
+[node name="BackDecorationZ" type="Sprite2D" parent="RearFace" unique_id=1333014642]
+position = Vector2(30, 45)
+texture = ExtResource("10_bnn6f")

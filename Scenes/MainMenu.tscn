@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://lovn5wxdy13p"]
 
+[ext_resource type="Script" uid="uid://pkrkwctqv0op" path="res://Scripts/MainMenu.cs" id="1_tt5f1"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
 bg_color = Color(0.16206557, 0.1620656, 0.16206548, 1)
 corner_radius_top_left = 16
@@ -14,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_tt5f1")
 
 [node name="Label" type="Label" parent="." unique_id=1932622415]
 layout_mode = 1
@@ -41,23 +44,27 @@ offset_bottom = 86.75
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="VBoxContainer" unique_id=590033937]
+[node name="CollectionButton" type="Button" parent="VBoxContainer" unique_id=590033937]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-text = "START	"
+text = "COLLECTION"
 
 [node name="Button2" type="Button" parent="VBoxContainer" unique_id=149876383]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-text = "OPTIONS"
+text = "add card test"
 
 [node name="Button3" type="Button" parent="VBoxContainer" unique_id=297077686]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "EXIT"
+
+[connection signal="pressed" from="VBoxContainer/CollectionButton" to="." method="_on_collection_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
