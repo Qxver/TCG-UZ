@@ -24,12 +24,11 @@ CardCollection="*uid://cnki6b22iljnx"
 
 window/size/viewport_width=640
 window/size/viewport_height=360
-window/size/mode=3
 window/stretch/mode="viewport"
 
 [dotnet]
 
-project/assembly_name="KartUZ"
+project/assembly_name="TCG-UZ"
 
 [physics]
 
