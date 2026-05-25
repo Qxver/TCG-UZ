@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bs1teaxiy4lfk"]
 
-[ext_resource type="Script" uid="uid://f5rg7v1r80rb" path="res://Scripts/Card/Card.cs" id="1_f3ywt"]
+[ext_resource type="Script" uid="uid://dbx0snqtl5mj1" path="res://Scripts/Card/Card.cs" id="1_f3ywt"]
 [ext_resource type="Texture2D" uid="uid://cy7hpprm1a4a" path="res://Sprites/Card/Front/card_front_outer_border.png" id="1_pbuqb"]
 [ext_resource type="Texture2D" uid="uid://c243g6g1mi2wj" path="res://Sprites/Card/Front/card_color.png" id="2_f3ywt"]
 [ext_resource type="Texture2D" uid="uid://wp4l78cmsi2r" path="res://Sprites/Card/Front/card_front_outer_spacer.png" id="3_6elyo"]
@@ -30,12 +30,14 @@ offset_right = 30.0
 offset_bottom = 46.0
 pivot_offset = Vector2(30, 44)
 script = ExtResource("1_f3ywt")
+metadata/_edit_horizontal_guides_ = [-37.0]
 
 [node name="FrontFace" type="Control" parent="." unique_id=1834250423]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(30, 44)
@@ -65,7 +67,7 @@ pivot_offset = Vector2(30, 44)
 mouse_filter = 2
 
 [node name="StatsSprite" type="Sprite2D" parent="Stats" unique_id=67329389]
-position = Vector2(30, 49)
+position = Vector2(30, 44)
 texture = ExtResource("5_swj2d")
 
 [node name="CostLabel" type="Label" parent="Stats" unique_id=503728683]
@@ -114,23 +116,27 @@ mouse_filter = 2
 
 [node name="InnerColor" type="Sprite2D" parent="RearFace" unique_id=1231885521]
 modulate = Color(0.55336356, 0.5714368, 0.5504175, 1)
-position = Vector2(30, 45)
+position = Vector2(30, 44)
+scale = Vector2(1, 0.99999994)
 texture = ExtResource("6_co2vc")
 
 [node name="OuterOutline" type="Sprite2D" parent="RearFace" unique_id=727764830]
-position = Vector2(30, 45)
+position = Vector2(30, 44)
 texture = ExtResource("7_tayg5")
 
 [node name="OuterSpacer" type="Sprite2D" parent="RearFace" unique_id=79992975]
-position = Vector2(30, 45)
+position = Vector2(30, 44)
+scale = Vector2(1, 0.9999999)
 texture = ExtResource("8_w84x6")
 
 [node name="BackDecorationU" type="Sprite2D" parent="RearFace" unique_id=1727683226]
-position = Vector2(30, 45)
+position = Vector2(30, 44)
+scale = Vector2(1, 0.99999994)
 texture = ExtResource("9_7qgfu")
 
 [node name="BackDecorationZ" type="Sprite2D" parent="RearFace" unique_id=1333014642]
-position = Vector2(30, 45)
+position = Vector2(30, 44)
+scale = Vector2(1, 0.99999994)
 texture = ExtResource("10_bnn6f")
 
 [node name="GrabArea" type="Area2D" parent="." unique_id=1709311713]

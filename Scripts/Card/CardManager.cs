@@ -71,4 +71,33 @@ public partial class CardManager : Node2D
 		Area2D area = (Area2D)collider;
 		return area.GetParent<Control>();
 	}
+
+	public void ConnectCardSignals(Card card)
+    {
+        // TAK podłącza się sygnały w Godot 4 C#
+        card.CardOnHoverEntered += OnCardHoverEntered;
+        card.CardOnHoverExited += OnCardHoverExited;
+    }
+
+	private void OnCardHoverEntered(Card card)
+    {
+       HighlightCard(card, true);
+    }
+
+    private void OnCardHoverExited(Card card)
+    {
+		HighlightCard(card, false);
+	}
+
+	private void HighlightCard(Card card, bool highlight)
+	{
+		if (highlight)
+		{
+			 card.Scale = new Vector2(1.1f, 1.1f);
+		}
+		else
+		{
+			card.Scale = new Vector2(1f, 1f);
+		}
+	}
 }
