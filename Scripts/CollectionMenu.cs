@@ -23,7 +23,6 @@ public partial class CollectionMenu : Control
 		foreach (Node child in Grid.GetChildren())
 			child.QueueFree();
 
-		// Pobieramy wszystkie karty i sortujemy po ID (numerycznie)
 		var allCards = new List<CardData>(CardDatabase.Instance.AllCards);
 		allCards.Sort((a, b) =>
 		{
@@ -49,7 +48,6 @@ public partial class CollectionMenu : Control
 				portrait.Texture = isUnlocked ? data.Portrait : lockedTexture;
 			}
 
-			// Opcjonalnie: przyciemnij całą kartę jeśli zablokowana
 			var frontFace = card.GetNodeOrNull<CanvasItem>("FrontFace");
 			if (frontFace != null && !isUnlocked)
 			{
