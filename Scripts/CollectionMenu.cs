@@ -5,6 +5,11 @@ public partial class CollectionMenu : Control
 	[Export] public PackedScene Card;
 	[Export] public GridContainer Grid;
 
+public void _on_back_button_pressed()
+	{
+		GetTree().ChangeSceneToFile("res://Scenes/MainMenu.tscn");
+	}
+
 	public override void _Ready()
 	{
 		Refresh();

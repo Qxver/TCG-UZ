@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_efc28")
 Id = "2"
-Name = "Template"
+Name = "dr inż. Andrzej Czajkowski"
 Description = "template"
 Portrait = ExtResource("1_5tmgs")
 Rarity = 2
