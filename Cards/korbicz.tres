@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("2_ojo53")
 Id = "3"
-Name = "Template"
+Name = "prof. dr hab. inż. Józef Korbicz"
 Description = "template"
 Portrait = ExtResource("1_r6nie")
-Rarity = 3
+Rarity = 4
 Health = 6
 Cost = 2

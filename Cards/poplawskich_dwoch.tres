@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_qleo6")
 Id = "5"
-Name = "Template"
+Name = "dr inż. Mateusz Andrzej Popławski"
 Description = "template"
 Portrait = ExtResource("1_f2han")
+Rarity = 2
