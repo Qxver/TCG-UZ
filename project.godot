@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-CardDatabase="*uid://5krr1rpt74qo"
-CardCollection="*uid://cnki6b22iljnx"
+CardDatabase="*uid://dl6ule08c0k36"
+CardCollection="*uid://bhbqqve3fl7yd"
 
 [display]
 

@@ -9,6 +9,7 @@ public partial class Card : Control
     [Signal]
     public delegate void CardOnHoverExitedEventHandler(Card card);
 
+	public bool isPlaced = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

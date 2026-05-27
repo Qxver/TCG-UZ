@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ddvwmw3pq1khr"]
 
-[ext_resource type="Script" uid="uid://dtt44ngwrq11p" path="res://Scripts/CollectionMenu.cs" id="1_5hqi3"]
+[ext_resource type="Script" uid="uid://bsntlb5dvkr4b" path="res://Scripts/CollectionMenu.cs" id="1_5hqi3"]
 [ext_resource type="PackedScene" uid="uid://bs1teaxiy4lfk" path="res://Scenes/Card.tscn" id="2_dku4g"]
 
 [node name="CardCollection" type="Control" unique_id=365871797 node_paths=PackedStringArray("Grid")]

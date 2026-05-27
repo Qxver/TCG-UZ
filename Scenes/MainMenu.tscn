@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://lovn5wxdy13p"]
 
-[ext_resource type="Script" uid="uid://pkrkwctqv0op" path="res://Scripts/MainMenu.cs" id="1_tt5f1"]
+[ext_resource type="Script" uid="uid://cfueh8x85b2ei" path="res://Scripts/MainMenu.cs" id="1_tt5f1"]
+[ext_resource type="Script" uid="uid://dhwdlef5dykpf" path="res://Scripts/Card/CardSlot.cs" id="2_8saeu"]
+[ext_resource type="Texture2D" uid="uid://dx6tejfmhlfb7" path="res://Sprites/Card/Slot/empty_slot.png" id="2_853f1"]
+[ext_resource type="PackedScene" uid="uid://bs5klrcjxcedh" path="res://Scenes/CardManager.tscn" id="4_df05h"]
+[ext_resource type="PackedScene" uid="uid://bs1teaxiy4lfk" path="res://Scenes/Card.tscn" id="5_8um5k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
 bg_color = Color(0.16206557, 0.1620656, 0.16206548, 1)
@@ -8,6 +12,9 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8saeu"]
+size = Vector2(60, 90)
 
 [node name="MainMenu" type="Control" unique_id=2126614158]
 layout_mode = 3
@@ -65,6 +72,34 @@ size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "EXIT"
+
+[node name="CardSlot" type="Node2D" parent="." unique_id=1809934074]
+position = Vector2(81, 60)
+script = ExtResource("2_8saeu")
+
+[node name="Sprite2D" type="Sprite2D" parent="CardSlot" unique_id=1385271369]
+texture = ExtResource("2_853f1")
+
+[node name="Area2D" type="Area2D" parent="CardSlot" unique_id=1411838532]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardSlot/Area2D" unique_id=1614879114]
+shape = SubResource("RectangleShape2D_8saeu")
+
+[node name="CardManager" parent="." unique_id=1531874455 instance=ExtResource("4_df05h")]
+
+[node name="Card" parent="CardManager" unique_id=206235274 instance=ExtResource("5_8um5k")]
+offset_left = 150.0
+offset_top = 12.0
+offset_right = 210.0
+offset_bottom = 102.0
+
+[node name="Card2" parent="CardManager" unique_id=927706222 instance=ExtResource("5_8um5k")]
+offset_left = 31.0
+offset_top = 118.0
+offset_right = 91.0
+offset_bottom = 208.0
 
 [connection signal="pressed" from="VBoxContainer/CollectionButton" to="." method="_on_collection_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]

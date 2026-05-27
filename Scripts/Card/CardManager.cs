@@ -7,7 +7,8 @@ public partial class CardManager : Node2D
 	Vector2 screenSize;
 	System.Collections.Generic.List<Card> hoveredCards = new System.Collections.Generic.List<Card>();
 	Card currentlyHighlightedCard = null;
-	uint cardLayerMask = 1;
+	const uint cardLayerMask = 1;
+	const uint slotLayerMask = 2;
 	public override void _Ready()
 	{
 		screenSize = GetViewport().GetVisibleRect().Size;
@@ -59,6 +60,11 @@ public partial class CardManager : Node2D
 	
 	public void DragStarted(Control card)
 	{
+		if (card is Card cardScript && cardScript.isPlaced) 
+		{
+			return;
+		}
+
 		draggedCard = card;
 		card.Scale = new Vector2(1.0f, 1.0f);
 		card.ZIndex = 2;
@@ -68,11 +74,35 @@ public partial class CardManager : Node2D
 
 	public void DragEnded(Control card)
 	{
-		draggedCard = null;
 		HighlightCard((Card)card, false);
 		UpdateHoveredHighlight();
-	}
 
+		var cardSlotFound = RaycastCheckForCardSlot();
+		if(cardSlotFound is CardSlot slot && !slot.cardInside)
+		{
+			card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
+			slot.cardInside = true;
+
+			if (card is Card cardScript)
+			{
+				cardScript.isPlaced = true;
+
+				if (hoveredCards.Contains(cardScript))
+				{
+					hoveredCards.Remove(cardScript);
+				}
+				if (currentlyHighlightedCard == cardScript)
+				{
+					currentlyHighlightedCard = null;
+				}
+			}
+
+			var collisionShape = card.GetNodeOrNull<CollisionShape2D>("Area2D/CollisionShape2D");
+			if (collisionShape != null)
+    			collisionShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+			}
+		draggedCard = null;
+	}
 
 	public Control RaycastCheckForCard()
 	{
@@ -88,6 +118,23 @@ public partial class CardManager : Node2D
 		if(result.Count == 0) { return null; }
 		
 		return HighestZIndexCard(result);
+    }
+
+	public Node2D RaycastCheckForCardSlot()
+	{
+		var spaceState = GetWorld2D().DirectSpaceState;
+		var parameters = new PhysicsPointQueryParameters2D();
+		
+		parameters.Position = GetGlobalMousePosition();
+		parameters.CollideWithAreas = true;
+		parameters.CollisionMask = slotLayerMask;
+
+		var result = spaceState.IntersectPoint(parameters);
+		
+		if(result.Count == 0) { return null; }
+		
+		result[0].TryGetValue("collider", out var collider);
+		return ((Area2D)collider).GetParent<Node2D>();
 	}
 
 	private Card HighestZIndexCard(Godot.Collections.Array<Godot.Collections.Dictionary> cards)
@@ -179,6 +226,7 @@ public partial class CardManager : Node2D
 
 	private void OnCardHoverEntered(Card card)
 	{
+		if (card == null || card.isPlaced) return;
 		if (GodotObject.IsInstanceValid(card) && !hoveredCards.Contains(card))
 		{
 			hoveredCards.Add(card);
@@ -188,6 +236,7 @@ public partial class CardManager : Node2D
 
 	private void OnCardHoverExited(Card card)
 	{
+		if (card == null || card.isPlaced) return;
 		if (hoveredCards.Contains(card))
 		{
 			hoveredCards.Remove(card);
