@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://lovn5wxdy13p"]
 
-[ext_resource type="Script" uid="uid://pkrkwctqv0op" path="res://Scripts/MainMenu.cs" id="1_tt5f1"]
+[ext_resource type="Script" uid="uid://cfueh8x85b2ei" path="res://Scripts/MainMenu.cs" id="1_tt5f1"]
+[ext_resource type="PackedScene" uid="uid://ds3n31xmbdfht" path="res://Scenes/CardSlot.tscn" id="2_ghw46"]
+[ext_resource type="PackedScene" uid="uid://bs5klrcjxcedh" path="res://Scenes/CardManager.tscn" id="4_df05h"]
+[ext_resource type="PackedScene" uid="uid://bs1teaxiy4lfk" path="res://Scenes/Card.tscn" id="5_8um5k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
 bg_color = Color(0.16206557, 0.1620656, 0.16206548, 1)
@@ -65,6 +68,23 @@ size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "EXIT"
+
+[node name="CardSlot" parent="." unique_id=29271457 instance=ExtResource("2_ghw46")]
+position = Vector2(81, 60)
+
+[node name="CardManager" parent="." unique_id=1531874455 instance=ExtResource("4_df05h")]
+
+[node name="Card" parent="CardManager" unique_id=206235274 instance=ExtResource("5_8um5k")]
+offset_left = 150.0
+offset_top = 12.0
+offset_right = 210.0
+offset_bottom = 102.0
+
+[node name="Card2" parent="CardManager" unique_id=927706222 instance=ExtResource("5_8um5k")]
+offset_left = 31.0
+offset_top = 118.0
+offset_right = 91.0
+offset_bottom = 208.0
 
 [connection signal="pressed" from="VBoxContainer/CollectionButton" to="." method="_on_collection_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]

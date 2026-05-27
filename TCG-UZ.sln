@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartUZ", "KartUZ.csproj", "{5BC83E2B-68B7-4BF2-8816-9F7F19A22555}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCG-UZ", "TCG-UZ.csproj", "{5BC83E2B-68B7-4BF2-8816-9F7F19A22555}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
