@@ -72,7 +72,8 @@ text = "EXIT"
 [node name="CardSlot" parent="." unique_id=29271457 instance=ExtResource("2_ghw46")]
 position = Vector2(81, 60)
 
-[node name="CardManager" parent="." unique_id=1531874455 instance=ExtResource("4_df05h")]
+[node name="CardManager" parent="." unique_id=1531874455 node_paths=PackedStringArray("playerHand") instance=ExtResource("4_df05h")]
+playerHand = NodePath("../PlayerHand")
 
 [node name="PlayerHand" parent="." unique_id=908504061 node_paths=PackedStringArray("CardManager") instance=ExtResource("4_ghw46")]
 CardManager = NodePath("../CardManager")
