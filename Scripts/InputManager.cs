@@ -6,6 +6,8 @@ public partial class InputManager : Node2D
     [Export] public Deck StudentDeck;
     [Export] public CardManager cardManager;
 
+    [Export] public int StartingHandSize = 4;
+
     private bool hasDrawnThisTurn = false;
 
     const uint cardLayerMask = 1;
@@ -18,6 +20,19 @@ public partial class InputManager : Node2D
             cardManager = GetParent().GetNodeOrNull<CardManager>("CardManager");
             if (cardManager == null)
                 GD.PrintErr("InputManager: CardManager not found!");
+        }
+
+        CallDeferred(MethodName.DrawStartingHand);
+    }
+
+    private void DrawStartingHand()
+    {
+        for (int i = 0; i < StartingHandSize; i++)
+        {
+            if (CharacterDeck != null)
+            {
+                CharacterDeck.DrawCard();
+            }
         }
     }
 

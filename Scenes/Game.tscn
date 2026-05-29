@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://sb1aisu3fw8p" path="res://Cards/poplawskich_dwoch.tres" id="8_3so38"]
 [ext_resource type="Resource" uid="uid://cloxnfpwq8acm" path="res://Cards/powroznik.tres" id="9_3cx6b"]
 [ext_resource type="Resource" uid="uid://cmnl4p5su2tf5" path="res://Cards/barkalov.tres" id="10_wxwew"]
+[ext_resource type="Resource" uid="uid://7j0at6l0t7ub" path="res://Cards/student.tres" id="11_dahhg"]
 
 [node name="Game" type="Control" unique_id=1265330324]
 layout_mode = 3
@@ -68,9 +69,12 @@ CardManager = NodePath("../CardManager")
 StartingCards = Array[ExtResource("6_71axn")]([ExtResource("7_dahhg"), ExtResource("8_3so38"), ExtResource("9_3cx6b"), ExtResource("10_wxwew")])
 
 [node name="StudentDeck" parent="." unique_id=1045034594 node_paths=PackedStringArray("PlayerHand", "CardManager") instance=ExtResource("4_b2bpf")]
-position = Vector2(568, 60)
+position = Vector2(568, 58)
 PlayerHand = NodePath("../PlayerHand")
 CardManager = NodePath("../CardManager")
+StartingCards = Array[ExtResource("6_71axn")]([ExtResource("11_dahhg")])
+IsInfinite = true
+ShowRearFace = false
 
 [node name="Button" type="Button" parent="." unique_id=1276174124]
 layout_mode = 0

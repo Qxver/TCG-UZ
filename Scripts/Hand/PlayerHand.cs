@@ -6,30 +6,20 @@ public partial class PlayerHand : Node2D
 {
     [Export] public Node2D CardManager { get; set; }
     
-    const int cardWidth = 75; 
+    const int cardWidth = 70; 
     const int handYPosition = 260; 
-    int handSize = 3;
     
     float screenCenterX; 
     
     PackedScene cardScene = GD.Load<PackedScene>("res://Scenes/Card.tscn");
     List<Card> cardsInHand = new List<Card>();
+    public IReadOnlyList<Card> CardsInHand => cardsInHand;
 
     public override void _Ready()
-{
-    screenCenterX = GetViewportRect().Size.X / 2;
-
-    for (int i = 0; i < handSize; i++)
     {
-        var card = cardScene.Instantiate<Card>();
-        card.Name = $"Card_{i}";
-        CardManager.AddChild(card);
-        
-        cardsInHand.Add(card); 
+        screenCenterX = GetViewportRect().Size.X / 2;
+        UpdateCardPositions();
     }
-
-    UpdateCardPositions();
-}
 
     public override void _Process(double delta)
     {

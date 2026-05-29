@@ -98,11 +98,42 @@ public partial class CardManager : Node2D
 		var cardSlotFound = RaycastCheckForCardSlot();
 		if(cardSlotFound is CardSlot slot && !slot.cardInside && slot.isPlayerSlot)
 		{
-			card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
-			slot.cardInside = true;
+			playerHand.RemoveCardFromHand((Card)card);
 
 			if (card is Card cardScript)
 			{
+				int cost = cardScript.Data != null ? cardScript.Data.Cost : 0;
+				if (cost > 0)
+				{
+					var studentsInHand = new System.Collections.Generic.List<Card>();
+					foreach (var c in playerHand.CardsInHand)
+					{
+						if (c != cardScript && c.Data != null && c.Data.Cost == 0)
+						{
+							studentsInHand.Add(c);
+						}
+					}
+
+					if (studentsInHand.Count < cost)
+					{
+						cardScript.ZIndex = 1;
+						playerHand?.AddCardToHand(cardScript);
+						draggedCard = null;
+						return;
+					}
+					else
+					{
+						for (int i = 0; i < cost; i++)
+						{
+							var studentToSpend = studentsInHand[i];
+							playerHand.RemoveCardFromHand(studentToSpend);
+							studentToSpend.QueueFree();
+						}
+					}
+				}
+
+				card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
+				slot.cardInside = true;
 				cardScript.isPlaced = true;
 
 				if (hoveredCards.Contains(cardScript))
@@ -114,9 +145,11 @@ public partial class CardManager : Node2D
 					currentlyHighlightedCard = null;
 				}
 			}
-
-			playerHand.RemoveCardFromHand((Card)card);
-
+			else
+			{
+				card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
+				slot.cardInside = true;
+			}
 
 			var collisionShape = card.GetNodeOrNull<CollisionShape2D>("Area2D/CollisionShape2D");
 			if (collisionShape != null)

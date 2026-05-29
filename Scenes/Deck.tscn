@@ -2,13 +2,19 @@
 
 [ext_resource type="Script" uid="uid://cim0x7frqln1g" path="res://Scripts/Card/Deck.cs" id="1_wggy2"]
 [ext_resource type="Texture2D" uid="uid://cl0dmsim4acic" path="res://Sprites/Card/Back/card_back_color.png" id="2_d4c6l"]
+[ext_resource type="Texture2D" uid="uid://crwilplwa3mc4" path="res://Sprites/Card/Front/card_front_outer_border.png" id="2_jhgps"]
+[ext_resource type="Texture2D" uid="uid://dpm43pl4qn7hi" path="res://Sprites/Card/Front/card_color.png" id="3_13dvi"]
 [ext_resource type="Texture2D" uid="uid://dbgvnw5r2n2gx" path="res://Sprites/Card/Back/card_back_outer_border.png" id="3_xs2sg"]
 [ext_resource type="Texture2D" uid="uid://dq5n2uifp05ur" path="res://Sprites/Card/Back/card_back_outer_spacer.png" id="4_fajb6"]
+[ext_resource type="Texture2D" uid="uid://c3am445e5dw1e" path="res://Sprites/Card/Front/card_front_outer_spacer.png" id="4_jjjr3"]
+[ext_resource type="Texture2D" uid="uid://r2xr6f3fcw3e" path="res://Sprites/Card/Portraits/Student.png" id="5_jhgps"]
 [ext_resource type="Texture2D" uid="uid://d1ooud1xd5vfq" path="res://Sprites/Card/Back/U_positioned.png" id="5_tsqdd"]
 [ext_resource type="Texture2D" uid="uid://qvqcombbix3j" path="res://Sprites/Card/Back/Z_positioned.png" id="6_jhgps"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3cx6b"]
 size = Vector2(60, 90)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kbamo"]
 
 [node name="Deck" type="Node2D" unique_id=1595004325]
 script = ExtResource("1_wggy2")
@@ -21,7 +27,37 @@ collision_mask = 4
 position = Vector2(30, 44)
 shape = SubResource("RectangleShape2D_3cx6b")
 
-[node name="RearFace" type="Control" parent="." unique_id=1093737824]
+[node name="FrontFace" type="Control" parent="." unique_id=72707877]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(30, 44)
+mouse_filter = 2
+
+[node name="OuterOutline" type="Sprite2D" parent="FrontFace" unique_id=188603314]
+position = Vector2(30, 44)
+texture = ExtResource("2_jhgps")
+
+[node name="InnerColor" type="Sprite2D" parent="FrontFace" unique_id=1370169730]
+modulate = Color(0.095231034, 0.42148873, 0.42772853, 1)
+material = SubResource("CanvasItemMaterial_kbamo")
+position = Vector2(30, 44)
+texture = ExtResource("3_13dvi")
+
+[node name="OuterSpacer" type="Sprite2D" parent="FrontFace" unique_id=1936130802]
+position = Vector2(30, 44)
+texture = ExtResource("4_jjjr3")
+
+[node name="Portrait" type="Sprite2D" parent="FrontFace" unique_id=407143605]
+position = Vector2(30, 68)
+texture = ExtResource("5_jhgps")
+
+[node name="RearFace" type="Control" parent="." unique_id=213596897]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,29 +66,28 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(30, 44)
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="InnerColor" type="Sprite2D" parent="RearFace" unique_id=209739105]
+[node name="InnerColor" type="Sprite2D" parent="RearFace" unique_id=1316792904]
 modulate = Color(0.55336356, 0.5714368, 0.5504175, 1)
 position = Vector2(30, 44)
 scale = Vector2(1, 0.99999994)
 texture = ExtResource("2_d4c6l")
 
-[node name="OuterOutline" type="Sprite2D" parent="RearFace" unique_id=1894766048]
+[node name="OuterOutline" type="Sprite2D" parent="RearFace" unique_id=177192267]
 position = Vector2(30, 44)
 texture = ExtResource("3_xs2sg")
 
-[node name="OuterSpacer" type="Sprite2D" parent="RearFace" unique_id=1390688052]
+[node name="OuterSpacer" type="Sprite2D" parent="RearFace" unique_id=739775163]
 position = Vector2(30, 44)
 scale = Vector2(1, 0.9999999)
 texture = ExtResource("4_fajb6")
 
-[node name="BackDecorationU" type="Sprite2D" parent="RearFace" unique_id=898945803]
+[node name="BackDecorationU" type="Sprite2D" parent="RearFace" unique_id=116638815]
 position = Vector2(30, 44)
 scale = Vector2(1, 0.99999994)
 texture = ExtResource("5_tsqdd")
 
-[node name="BackDecorationZ" type="Sprite2D" parent="RearFace" unique_id=1016495406]
+[node name="BackDecorationZ" type="Sprite2D" parent="RearFace" unique_id=669848168]
 position = Vector2(30, 44)
 scale = Vector2(1, 0.99999994)
 texture = ExtResource("6_jhgps")

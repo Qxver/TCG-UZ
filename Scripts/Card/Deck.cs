@@ -8,6 +8,9 @@ public partial class Deck : Node2D
 
     [Export] public Godot.Collections.Array<CardData> StartingCards = new();
 
+    [Export] public bool IsInfinite = false;
+    [Export] public bool ShowRearFace = true;
+
     private List<CardData> drawPile = new();
     private PackedScene cardScene = GD.Load<PackedScene>("res://Scenes/Card.tscn");
 
@@ -21,6 +24,12 @@ public partial class Deck : Node2D
 
         Shuffle();
         GD.Print($"{Name}: Deck ready with {drawPile.Count} cards.");
+
+        var rearFace = GetNodeOrNull<Control>("RearFace");
+        if (rearFace != null)
+        {
+            rearFace.Visible = ShowRearFace;
+        }
     }
 
     public void Shuffle()
@@ -50,12 +59,21 @@ public partial class Deck : Node2D
         var cardData = drawPile[0];
         drawPile.RemoveAt(0);
 
+        if (IsInfinite)
+        {
+            drawPile.Add(cardData);
+        }
+
         var card = cardScene.Instantiate<Card>();
         CardManager.AddChild(card);
         card.Initialize(cardData);
         PlayerHand.AddCardToHand(card);
 
-        GD.Print($"{Name}: Drew '{cardData.Name}', {drawPile.Count} remaining.");
+        if (IsInfinite)
+            GD.Print($"{Name}: Drew '{cardData.Name}', Infinite remaining.");
+        else
+            GD.Print($"{Name}: Drew '{cardData.Name}', {drawPile.Count} remaining.");
+            
         return true;
     }
 }
