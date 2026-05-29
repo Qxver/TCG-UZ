@@ -3,6 +3,7 @@ using System;
 
 public partial class CardManager : Node2D
 {
+	[Export] PlayerHand playerHand;
 	Control draggedCard = null;
 	Vector2 screenSize;
 	System.Collections.Generic.List<Card> hoveredCards = new System.Collections.Generic.List<Card>();
@@ -97,10 +98,17 @@ public partial class CardManager : Node2D
 				}
 			}
 
+			playerHand.RemoveCardFromHand((Card)card);
+
+
 			var collisionShape = card.GetNodeOrNull<CollisionShape2D>("Area2D/CollisionShape2D");
 			if (collisionShape != null)
     			collisionShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-			}
+		}
+		else
+		{
+			playerHand.AddCardToHand((Card)card);
+		}
 		draggedCard = null;
 	}
 
