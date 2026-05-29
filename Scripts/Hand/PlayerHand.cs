@@ -6,30 +6,20 @@ public partial class PlayerHand : Node2D
 {
     [Export] public Node2D CardManager { get; set; }
     
-    const int cardWidth = 75; 
-    const int handYPosition = 220; 
-    int handSize = 5;
+    const int cardWidth = 70; 
+    const int handYPosition = 260; 
     
     float screenCenterX; 
     
     PackedScene cardScene = GD.Load<PackedScene>("res://Scenes/Card.tscn");
     List<Card> cardsInHand = new List<Card>();
+    public IReadOnlyList<Card> CardsInHand => cardsInHand;
 
     public override void _Ready()
-{
-    screenCenterX = GetViewportRect().Size.X / 2;
-
-    for (int i = 0; i < handSize; i++)
     {
-        var card = cardScene.Instantiate<Card>();
-        card.Name = $"Card_{i}";
-        CardManager.AddChild(card);
-        
-        cardsInHand.Insert(0, card); 
+        screenCenterX = GetViewportRect().Size.X / 2;
+        UpdateCardPositions();
     }
-
-    UpdateCardPositions();
-}
 
     public override void _Process(double delta)
     {
@@ -38,7 +28,7 @@ public partial class PlayerHand : Node2D
     public void AddCardToHand(Card card)
     {
 		if(!cardsInHand.Contains(card)){
-			cardsInHand.Insert(0, card);
+			cardsInHand.Add(card);
 			UpdateCardPositions();
 		}
 		else{
@@ -65,20 +55,66 @@ public partial class PlayerHand : Node2D
             card.positionInHand = newPosition;
             AnimateCardToPosition(card, newPosition);
         }
+        RearrangeNodesInManager();
     }
 
     private void AnimateCardToPosition(Card card, Vector2 newPosition)
     {
-        var tween = GetTree().CreateTween();
-        tween.TweenProperty(card, "position", newPosition, 0.5);
+        if (!card.hasDrawnAnimPlayed)
+        {
+            card.hasDrawnAnimPlayed = true;
+
+            var tween = GetTree().CreateTween();
+            tween.TweenProperty(card, "position", newPosition, 0.5f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
+
+            var scaleTween = GetTree().CreateTween();
+            scaleTween.TweenProperty(card, "scale:x", 0.0f, 0.25f);
+            scaleTween.TweenCallback(Callable.From(() => {
+                if (GodotObject.IsInstanceValid(card))
+                {
+                    card.SetFaceDown(false);
+                }
+            }));
+            scaleTween.TweenProperty(card, "scale:x", 1.0f, 0.25f);
+        }
+        else
+        {
+            var tween = GetTree().CreateTween();
+            tween.TweenProperty(card, "position", newPosition, 0.5f);
+        }
     }
 
     private float CalculateCardPositions(int index)
-	{
-		var totalWidth = (cardsInHand.Count - 1) * cardWidth;
-		
-		var xOffset = screenCenterX - (totalWidth / 2f) + (index * cardWidth);
+    {
+        if (cardsInHand.Count == 1)
+        {
+            return screenCenterX - (cardWidth / 2f);
+        }
 
-		return xOffset - (cardWidth / 2f); 
-	}
+        float maxHandWidth = 500f; 
+
+        float idealWidth = (cardsInHand.Count - 1) * cardWidth;
+
+        float actualCardSpacing = cardWidth;
+        if (idealWidth > maxHandWidth)
+        {
+            actualCardSpacing = maxHandWidth / (cardsInHand.Count - 1);
+        }
+
+        float finalHandWidth = (cardsInHand.Count - 1) * actualCardSpacing;
+
+        float xOffset = screenCenterX - (finalHandWidth / 2f) + (index * actualCardSpacing) - (cardWidth / 2f);
+
+        return xOffset;
+    }
+
+    public void RearrangeNodesInManager()
+    {
+        if (CardManager == null) return;
+
+        for (int i = 0; i < cardsInHand.Count; i++)
+        {
+            CardManager.MoveChild(cardsInHand[i], i);
+        }
+    }
 }
