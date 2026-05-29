@@ -6,8 +6,20 @@ public partial class Card : Control
     [Signal] public delegate void CardOnHoverExitedEventHandler(Card card);
 
     public bool isPlaced = false;
+    public bool hasDrawnAnimPlayed = false;
     public Vector2 positionInHand;
     public CardData Data { get; private set; }
+
+    public void SetFaceDown(bool faceDown)
+    {
+        var frontFace = GetNodeOrNull<Control>("FrontFace");
+        var rearFace = GetNodeOrNull<Control>("RearFace");
+        var stats = GetNodeOrNull<Control>("Stats");
+
+        if (frontFace != null) frontFace.Visible = !faceDown;
+        if (stats != null) stats.Visible = !faceDown;
+        if (rearFace != null) rearFace.Visible = faceDown;
+    }
 
     public override void _Ready()
     {

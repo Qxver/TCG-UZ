@@ -60,8 +60,28 @@ public partial class PlayerHand : Node2D
 
     private void AnimateCardToPosition(Card card, Vector2 newPosition)
     {
-        var tween = GetTree().CreateTween();
-        tween.TweenProperty(card, "position", newPosition, 0.5);
+        if (!card.hasDrawnAnimPlayed)
+        {
+            card.hasDrawnAnimPlayed = true;
+
+            var tween = GetTree().CreateTween();
+            tween.TweenProperty(card, "position", newPosition, 0.5f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
+
+            var scaleTween = GetTree().CreateTween();
+            scaleTween.TweenProperty(card, "scale:x", 0.0f, 0.25f);
+            scaleTween.TweenCallback(Callable.From(() => {
+                if (GodotObject.IsInstanceValid(card))
+                {
+                    card.SetFaceDown(false);
+                }
+            }));
+            scaleTween.TweenProperty(card, "scale:x", 1.0f, 0.25f);
+        }
+        else
+        {
+            var tween = GetTree().CreateTween();
+            tween.TweenProperty(card, "position", newPosition, 0.5f);
+        }
     }
 
     private float CalculateCardPositions(int index)

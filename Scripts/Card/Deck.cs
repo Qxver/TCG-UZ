@@ -67,6 +67,12 @@ public partial class Deck : Node2D
         var card = cardScene.Instantiate<Card>();
         CardManager.AddChild(card);
         card.Initialize(cardData);
+        
+        card.GlobalPosition = this.GlobalPosition;
+        card.SetFaceDown(true);
+        card.hasDrawnAnimPlayed = false;
+        card.ZIndex = 1;
+
         PlayerHand.AddCardToHand(card);
 
         if (IsInfinite)

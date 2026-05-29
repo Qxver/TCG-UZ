@@ -24,7 +24,7 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1695022525]
-position = Vector2(30, 44)
+position = Vector2(30, 43)
 shape = SubResource("RectangleShape2D_3cx6b")
 
 [node name="FrontFace" type="Control" parent="." unique_id=72707877]
