@@ -3,14 +3,19 @@ using System;
 
 public partial class MainMenu : Control
 {
-	public void _on_collection_button_pressed()
+	public void _on_collection_menu_button_pressed()
 	{
 		GetTree().ChangeSceneToFile("res://Scenes/CardCollection.tscn");
 	}
 	
-	public void _on_button_2_pressed()
+	public void _on_open_card_menu_button_pressed()
 	{
-		CardCollection.Instance.AddCard(CardDatabase.Instance.AllCards[0]);
+		GetTree().ChangeSceneToFile("res://Scenes/OpenCard.tscn");
+	}
+	
+	public void _on_exit_button_pressed()
+	{
+		GetTree().Quit();
 	}
 	
 	// Called when the node enters the scene tree for the first time.
