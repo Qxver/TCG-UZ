@@ -1,72 +1,83 @@
 using Godot;
-using Microsoft.VisualBasic;
-using System;
 
 public partial class InputManager : Node2D
 {
-	[Signal] public delegate void LeftMouseButtonPressedEventHandler();
-	[Signal] public delegate void LeftMouseButtonReleasedEventHandler();
+    [Export] public Deck CharacterDeck;
+    [Export] public Deck StudentDeck;
+    [Export] public CardManager cardManager;
 
-	[Export] Deck CharacterDeck;
-	[Export] CardManager cardManager;
-	const uint cardLayerMask = 1;
-	const uint slotLayerMask = 2;
-	const uint deckLayerMask = 4;
+    private bool hasDrawnThisTurn = false;
 
-	public override void _Ready()
-	{
-		if (cardManager == null)
-		{
-			cardManager = GetParent().GetNodeOrNull<CardManager>("CardManager");
-			if (cardManager == null)
-				GD.PrintErr("InputManager: CardManager not found!");
-		}
-	}
+    const uint cardLayerMask = 1;
+    const uint deckLayerMask = 4;
 
-	public override void _Input(InputEvent @event)
-	{
+    public override void _Ready()
+    {
+        if (cardManager == null)
+        {
+            cardManager = GetParent().GetNodeOrNull<CardManager>("CardManager");
+            if (cardManager == null)
+                GD.PrintErr("InputManager: CardManager not found!");
+        }
+    }
 
-		if(@event is InputEventMouseButton mouseEvent)
-		{
-			if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == true)
-			{
-				EmitSignal(SignalName.LeftMouseButtonPressed);
-				RaycastAtCursor();
-			}
-			else if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == false)
-			{
-				EmitSignal(SignalName.LeftMouseButtonReleased);
-			}
-		}
-	}
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mouseEvent)
+        {
+            if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
+            {
+                RaycastAtCursor();
+            }
+            else if (mouseEvent.ButtonIndex == MouseButton.Left && !mouseEvent.Pressed)
+            {
+                if (cardManager != null && cardManager.IsDragging())
+                    cardManager.DragEnded(cardManager.GetDraggedCard());
+            }
+        }
+    }
 
-	public void RaycastAtCursor()
-	{
-		var spaceState = GetWorld2D().DirectSpaceState;
-		var parameters = new PhysicsPointQueryParameters2D();
-		
-		parameters.Position = GetGlobalMousePosition();
-		parameters.CollideWithAreas = true;
+    public void RaycastAtCursor()
+    {
+        var spaceState = GetWorld2D().DirectSpaceState;
+        var parameters = new PhysicsPointQueryParameters2D
+        {
+            Position = GetGlobalMousePosition(),
+            CollideWithAreas = true
+        };
 
-		var result = spaceState.IntersectPoint(parameters);
-		
-		if(result.Count > 0) 
-		{
-			result[0].TryGetValue("collider", out var resultCollision);
-        
-			uint mask = ((Area2D)resultCollision).CollisionMask;
+        var result = spaceState.IntersectPoint(parameters);
+        if (result.Count == 0) return;
 
-			if(mask == cardLayerMask){
-				Card card = ((Area2D)resultCollision).GetParent<Card>();
-				cardManager.DragStarted(card);
-			}
-			else if(mask == slotLayerMask){
-				CardSlot slot = ((Area2D)resultCollision).GetParent<CardSlot>();
-			}
-			else if(mask == deckLayerMask){
-				CharacterDeck.DrawCard();
-			}
-			
-		}
-	}
+        result[0].TryGetValue("collider", out var resultCollision);
+        var area = (Area2D)resultCollision;
+        uint mask = area.CollisionMask;
+
+        if (mask == cardLayerMask)
+        {
+            cardManager?.DragStarted(area.GetParent<Card>());
+        }
+        else if (mask == deckLayerMask)
+        {
+            TryDrawFromDeck(area.GetParent<Deck>());
+        }
+    }
+
+    private void TryDrawFromDeck(Deck deck)
+    {
+        if (hasDrawnThisTurn)
+        {
+            GD.Print("Already drew a card this turn!");
+            return;
+        }
+        if (deck.DrawCard())
+            hasDrawnThisTurn = true;
+    }
+
+    // Wire this to your End Turn button
+    public void OnEndTurn()
+    {
+        hasDrawnThisTurn = false;
+        GD.Print("Turn ended.");
+    }
 }

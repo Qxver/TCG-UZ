@@ -5,8 +5,15 @@
 [ext_resource type="PackedScene" uid="uid://ds3n31xmbdfht" path="res://Scenes/CardSlot.tscn" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://dvb0nvgk828kb" path="res://Scenes/Deck.tscn" id="4_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://xlrprvx0tm33" path="res://Scenes/InputManager.tscn" id="5_7lihs"]
+[ext_resource type="Script" uid="uid://cikffr7o06n1s" path="res://Scripts/Card/CardData.cs" id="6_71axn"]
+[ext_resource type="Resource" uid="uid://5655vgf774ka" path="res://Cards/hladowski.tres" id="7_dahhg"]
+[ext_resource type="Resource" uid="uid://sb1aisu3fw8p" path="res://Cards/poplawskich_dwoch.tres" id="8_3so38"]
+[ext_resource type="Resource" uid="uid://cloxnfpwq8acm" path="res://Cards/powroznik.tres" id="9_3cx6b"]
+[ext_resource type="Resource" uid="uid://cmnl4p5su2tf5" path="res://Cards/barkalov.tres" id="10_wxwew"]
 
-[node name="Game" type="Node2D" unique_id=714236671]
+[node name="Game" type="Control" unique_id=1265330324]
+layout_mode = 3
+anchors_preset = 0
 metadata/_edit_horizontal_guides_ = [180.0]
 metadata/_edit_vertical_guides_ = [320.0]
 
@@ -14,6 +21,7 @@ metadata/_edit_vertical_guides_ = [320.0]
 playerHand = NodePath("../PlayerHand")
 
 [node name="PlayerHand" parent="." unique_id=908504061 node_paths=PackedStringArray("CardManager") instance=ExtResource("2_kldst")]
+position = Vector2(1, 0)
 CardManager = NodePath("../CardManager")
 
 [node name="PlayerSlots" type="Node2D" parent="." unique_id=883146382]
@@ -48,10 +56,28 @@ isPlayerSlot = false
 position = Vector2(413, 104)
 isPlayerSlot = false
 
-[node name="CharacterDeck" parent="." unique_id=1595004325 instance=ExtResource("4_b2bpf")]
-position = Vector2(568, 157)
+[node name="InputManageer" parent="." unique_id=866280308 node_paths=PackedStringArray("CharacterDeck", "StudentDeck", "cardManager") instance=ExtResource("5_7lihs")]
+CharacterDeck = NodePath("../CharacterDeck")
+StudentDeck = NodePath("../StudentDeck")
+cardManager = NodePath("../CardManager")
 
-[node name="InputManageer" parent="." unique_id=866280308 instance=ExtResource("5_7lihs")]
-
-[node name="StudentDeck" parent="." unique_id=1045034594 instance=ExtResource("4_b2bpf")]
+[node name="CharacterDeck" parent="." unique_id=1595004325 node_paths=PackedStringArray("PlayerHand", "CardManager") instance=ExtResource("4_b2bpf")]
 position = Vector2(568, 157)
+PlayerHand = NodePath("../PlayerHand")
+CardManager = NodePath("../CardManager")
+StartingCards = Array[ExtResource("6_71axn")]([ExtResource("7_dahhg"), ExtResource("8_3so38"), ExtResource("9_3cx6b"), ExtResource("10_wxwew")])
+
+[node name="StudentDeck" parent="." unique_id=1045034594 node_paths=PackedStringArray("PlayerHand", "CardManager") instance=ExtResource("4_b2bpf")]
+position = Vector2(568, 60)
+PlayerHand = NodePath("../PlayerHand")
+CardManager = NodePath("../CardManager")
+
+[node name="Button" type="Button" parent="." unique_id=1276174124]
+layout_mode = 0
+offset_left = 546.0
+offset_top = 7.0
+offset_right = 636.0
+offset_bottom = 38.0
+text = "END TURN"
+
+[connection signal="pressed" from="Button" to="InputManageer" method="OnEndTurn"]

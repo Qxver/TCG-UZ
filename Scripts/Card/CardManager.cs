@@ -4,6 +4,9 @@ using System;
 public partial class CardManager : Node2D
 {
 	[Export] PlayerHand playerHand;
+	[Export] InputManager inputManager;
+	public bool IsDragging() => draggedCard != null;
+	public Control GetDraggedCard() => draggedCard;
 	Control draggedCard = null;
 	Vector2 screenSize;
 	System.Collections.Generic.List<Card> hoveredCards = new System.Collections.Generic.List<Card>();
@@ -19,9 +22,18 @@ public partial class CardManager : Node2D
 			if (playerHand == null)
 				GD.PrintErr("CardManager: PlayerHand not found!");
 		}
+
 	}
 
-	public override void _Process(double delta)
+    private void OnLeftMouseButtonReleased()
+    {
+    }
+
+    private void OnLeftMouseButtonPressed()
+    {
+    }
+
+    public override void _Process(double delta)
 	{
 		if(draggedCard != null)
 		{

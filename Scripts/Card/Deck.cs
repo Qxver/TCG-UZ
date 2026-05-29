@@ -1,15 +1,61 @@
 using Godot;
-using System;
+using System.Collections.Generic;
 
 public partial class Deck : Node2D
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+    [Export] public PlayerHand PlayerHand;
+    [Export] public Node2D CardManager;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    [Export] public Godot.Collections.Array<CardData> StartingCards = new();
+
+    private List<CardData> drawPile = new();
+    private PackedScene cardScene = GD.Load<PackedScene>("res://Scenes/Card.tscn");
+
+    public int RemainingCards => drawPile.Count;
+
+    public override void _Ready()
+    {
+        // Copy exported array into the draw pile and shuffle
+        foreach (var card in StartingCards)
+            drawPile.Add(card);
+
+        Shuffle();
+        GD.Print($"{Name}: Deck ready with {drawPile.Count} cards.");
+    }
+
+    public void Shuffle()
+    {
+        var rng = new System.Random();
+        for (int i = drawPile.Count - 1; i > 0; i--)
+        {
+            int j = rng.Next(i + 1);
+            (drawPile[i], drawPile[j]) = (drawPile[j], drawPile[i]);
+        }
+    }
+
+    public bool DrawCard()
+    {
+        if (drawPile.Count == 0)
+        {
+            GD.Print($"{Name}: Deck is empty!");
+            return false;
+        }
+
+        if (PlayerHand == null || CardManager == null)
+        {
+            GD.PrintErr($"{Name}: PlayerHand or CardManager not assigned!");
+            return false;
+        }
+
+        var cardData = drawPile[0];
+        drawPile.RemoveAt(0);
+
+        var card = cardScene.Instantiate<Card>();
+        CardManager.AddChild(card);
+        card.Initialize(cardData);
+        PlayerHand.AddCardToHand(card);
+
+        GD.Print($"{Name}: Drew '{cardData.Name}', {drawPile.Count} remaining.");
+        return true;
+    }
 }

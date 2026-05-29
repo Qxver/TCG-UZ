@@ -8,7 +8,7 @@ public partial class PlayerHand : Node2D
     
     const int cardWidth = 75; 
     const int handYPosition = 260; 
-    int handSize = 15;
+    int handSize = 3;
     
     float screenCenterX; 
     
