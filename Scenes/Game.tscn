@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cmyuxdvq8nqyp"]
+
+[ext_resource type="PackedScene" uid="uid://bs5klrcjxcedh" path="res://Scenes/CardManager.tscn" id="1_j5yw3"]
+[ext_resource type="PackedScene" uid="uid://c3x6otc11defq" path="res://Scenes/PlayerHand.tscn" id="2_kldst"]
+[ext_resource type="PackedScene" uid="uid://ds3n31xmbdfht" path="res://Scenes/CardSlot.tscn" id="3_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://dvb0nvgk828kb" path="res://Scenes/Deck.tscn" id="4_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://xlrprvx0tm33" path="res://Scenes/InputManager.tscn" id="5_7lihs"]
+
+[node name="Game" type="Node2D" unique_id=714236671]
+metadata/_edit_horizontal_guides_ = [180.0]
+metadata/_edit_vertical_guides_ = [320.0]
+
+[node name="CardManager" parent="." unique_id=1531874455 node_paths=PackedStringArray("playerHand") instance=ExtResource("1_j5yw3")]
+playerHand = NodePath("../PlayerHand")
+
+[node name="PlayerHand" parent="." unique_id=908504061 node_paths=PackedStringArray("CardManager") instance=ExtResource("2_kldst")]
+CardManager = NodePath("../CardManager")
+
+[node name="PlayerSlots" type="Node2D" parent="." unique_id=883146382]
+
+[node name="CardSlot1" parent="PlayerSlots" unique_id=29271457 instance=ExtResource("3_b2bpf")]
+position = Vector2(227, 201)
+
+[node name="CardSlot2" parent="PlayerSlots" unique_id=954311638 instance=ExtResource("3_b2bpf")]
+position = Vector2(289, 201)
+
+[node name="CardSlot3" parent="PlayerSlots" unique_id=1963925027 instance=ExtResource("3_b2bpf")]
+position = Vector2(351, 201)
+
+[node name="CardSlot4" parent="PlayerSlots" unique_id=150035552 instance=ExtResource("3_b2bpf")]
+position = Vector2(413, 201)
+
+[node name="EnemySlots" type="Node2D" parent="." unique_id=709414840]
+
+[node name="CardSlot1" parent="EnemySlots" unique_id=1795392280 instance=ExtResource("3_b2bpf")]
+position = Vector2(227, 104)
+isPlayerSlot = false
+
+[node name="CardSlot2" parent="EnemySlots" unique_id=691205640 instance=ExtResource("3_b2bpf")]
+position = Vector2(289, 104)
+isPlayerSlot = false
+
+[node name="CardSlot3" parent="EnemySlots" unique_id=1364478208 instance=ExtResource("3_b2bpf")]
+position = Vector2(351, 104)
+isPlayerSlot = false
+
+[node name="CardSlot4" parent="EnemySlots" unique_id=1283563994 instance=ExtResource("3_b2bpf")]
+position = Vector2(413, 104)
+isPlayerSlot = false
+
+[node name="CharacterDeck" parent="." unique_id=1595004325 instance=ExtResource("4_b2bpf")]
+position = Vector2(568, 157)
+
+[node name="InputManageer" parent="." unique_id=866280308 instance=ExtResource("5_7lihs")]
+
+[node name="StudentDeck" parent="." unique_id=1045034594 instance=ExtResource("4_b2bpf")]
+position = Vector2(568, 157)

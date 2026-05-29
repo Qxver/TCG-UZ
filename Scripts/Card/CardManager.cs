@@ -13,6 +13,12 @@ public partial class CardManager : Node2D
 	public override void _Ready()
 	{
 		screenSize = GetViewport().GetVisibleRect().Size;
+		if (playerHand == null)
+		{
+			playerHand = GetParent().GetNodeOrNull<PlayerHand>("PlayerHand");
+			if (playerHand == null)
+				GD.PrintErr("CardManager: PlayerHand not found!");
+		}
 	}
 
 	public override void _Process(double delta)
@@ -29,35 +35,35 @@ public partial class CardManager : Node2D
 		}
 	}
 
-	public override void _Input(InputEvent @event)
-	{
+	// public override void _Input(InputEvent @event)
+	// {
 
-		if(@event is InputEventMouseButton mouseEvent)
-		{
-			if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == true)
-			{
-				var card = RaycastCheckForCard();
-				if(card != null)
-				{
-					DragStarted(card);
-				}
+	// 	if(@event is InputEventMouseButton mouseEvent)
+	// 	{
+	// 		if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == true)
+	// 		{
+	// 			var card = RaycastCheckForCard();
+	// 			if(card != null)
+	// 			{
+	// 				DragStarted(card);
+	// 			}
 				
-			}
-			else if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == false)
-			{
-				if (draggedCard != null)
-    			{
-        			DragEnded(draggedCard);
-    			}
-			}
-		}
+	// 		}
+	// 		else if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == false)
+	// 		{
+	// 			if (draggedCard != null)
+    // 			{
+    //     			DragEnded(draggedCard);
+    // 			}
+	// 		}
+	// 	}
 
 
-		if (@event.IsActionPressed("ui_accept"))
-		{
-			GD.Print("Accept button pressed");
-		}
-	}
+	// 	if (@event.IsActionPressed("ui_accept"))
+	// 	{
+	// 		GD.Print("Accept button pressed");
+	// 	}
+	// }
 	
 	public void DragStarted(Control card)
 	{
@@ -69,7 +75,6 @@ public partial class CardManager : Node2D
 		draggedCard = card;
 		card.Scale = new Vector2(1.0f, 1.0f);
 		card.ZIndex = 2;
-		card.GetParent().MoveChild(card, -1); // To do zmiany w momencie dodania ręki z kartami
 	}
 
 
@@ -79,7 +84,7 @@ public partial class CardManager : Node2D
 		UpdateHoveredHighlight();
 
 		var cardSlotFound = RaycastCheckForCardSlot();
-		if(cardSlotFound is CardSlot slot && !slot.cardInside)
+		if(cardSlotFound is CardSlot slot && !slot.cardInside && slot.isPlayerSlot)
 		{
 			card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
 			slot.cardInside = true;
@@ -107,7 +112,11 @@ public partial class CardManager : Node2D
 		}
 		else
 		{
-			playerHand.AddCardToHand((Card)card);
+			if (card is Card cardScript)
+			{
+				cardScript.ZIndex = 1;
+			}
+			playerHand?.AddCardToHand((Card)card);
 		}
 		draggedCard = null;
 	}

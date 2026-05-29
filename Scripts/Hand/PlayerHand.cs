@@ -7,8 +7,8 @@ public partial class PlayerHand : Node2D
     [Export] public Node2D CardManager { get; set; }
     
     const int cardWidth = 75; 
-    const int handYPosition = 220; 
-    int handSize = 5;
+    const int handYPosition = 260; 
+    int handSize = 15;
     
     float screenCenterX; 
     
@@ -25,7 +25,7 @@ public partial class PlayerHand : Node2D
         card.Name = $"Card_{i}";
         CardManager.AddChild(card);
         
-        cardsInHand.Insert(0, card); 
+        cardsInHand.Add(card); 
     }
 
     UpdateCardPositions();
@@ -38,7 +38,7 @@ public partial class PlayerHand : Node2D
     public void AddCardToHand(Card card)
     {
 		if(!cardsInHand.Contains(card)){
-			cardsInHand.Insert(0, card);
+			cardsInHand.Add(card);
 			UpdateCardPositions();
 		}
 		else{
@@ -65,6 +65,7 @@ public partial class PlayerHand : Node2D
             card.positionInHand = newPosition;
             AnimateCardToPosition(card, newPosition);
         }
+        RearrangeNodesInManager();
     }
 
     private void AnimateCardToPosition(Card card, Vector2 newPosition)
@@ -74,11 +75,36 @@ public partial class PlayerHand : Node2D
     }
 
     private float CalculateCardPositions(int index)
-	{
-		var totalWidth = (cardsInHand.Count - 1) * cardWidth;
-		
-		var xOffset = screenCenterX - (totalWidth / 2f) + (index * cardWidth);
+    {
+        if (cardsInHand.Count == 1)
+        {
+            return screenCenterX - (cardWidth / 2f);
+        }
 
-		return xOffset - (cardWidth / 2f); 
-	}
+        float maxHandWidth = 500f; 
+
+        float idealWidth = (cardsInHand.Count - 1) * cardWidth;
+
+        float actualCardSpacing = cardWidth;
+        if (idealWidth > maxHandWidth)
+        {
+            actualCardSpacing = maxHandWidth / (cardsInHand.Count - 1);
+        }
+
+        float finalHandWidth = (cardsInHand.Count - 1) * actualCardSpacing;
+
+        float xOffset = screenCenterX - (finalHandWidth / 2f) + (index * actualCardSpacing) - (cardWidth / 2f);
+
+        return xOffset;
+    }
+
+    public void RearrangeNodesInManager()
+    {
+        if (CardManager == null) return;
+
+        for (int i = 0; i < cardsInHand.Count; i++)
+        {
+            CardManager.MoveChild(cardsInHand[i], i);
+        }
+    }
 }

@@ -13,6 +13,9 @@ public partial class MainMenu : Control
 		CardCollection.Instance.AddCard(CardDatabase.Instance.AllCards[0]);
 	}
 	
+	public void OnPlayButtonPressed(){
+		GetTree().ChangeSceneToFile("res://Scenes/Game.tscn");
+	}
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

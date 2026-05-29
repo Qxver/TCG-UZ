@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://dvb0nvgk828kb"]
+
+[ext_resource type="Script" uid="uid://cim0x7frqln1g" path="res://Scripts/Card/Deck.cs" id="1_wggy2"]
+[ext_resource type="Texture2D" uid="uid://cl0dmsim4acic" path="res://Sprites/Card/Back/card_back_color.png" id="2_d4c6l"]
+[ext_resource type="Texture2D" uid="uid://dbgvnw5r2n2gx" path="res://Sprites/Card/Back/card_back_outer_border.png" id="3_xs2sg"]
+[ext_resource type="Texture2D" uid="uid://dq5n2uifp05ur" path="res://Sprites/Card/Back/card_back_outer_spacer.png" id="4_fajb6"]
+[ext_resource type="Texture2D" uid="uid://d1ooud1xd5vfq" path="res://Sprites/Card/Back/U_positioned.png" id="5_tsqdd"]
+[ext_resource type="Texture2D" uid="uid://qvqcombbix3j" path="res://Sprites/Card/Back/Z_positioned.png" id="6_jhgps"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cx6b"]
+size = Vector2(60, 90)
+
+[node name="Deck" type="Node2D" unique_id=1595004325]
+script = ExtResource("1_wggy2")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=983028798]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1695022525]
+position = Vector2(30, 44)
+shape = SubResource("RectangleShape2D_3cx6b")
+
+[node name="RearFace" type="Control" parent="." unique_id=1093737824]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(30, 44)
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="InnerColor" type="Sprite2D" parent="RearFace" unique_id=209739105]
+modulate = Color(0.55336356, 0.5714368, 0.5504175, 1)
+position = Vector2(30, 44)
+scale = Vector2(1, 0.99999994)
+texture = ExtResource("2_d4c6l")
+
+[node name="OuterOutline" type="Sprite2D" parent="RearFace" unique_id=1894766048]
+position = Vector2(30, 44)
+texture = ExtResource("3_xs2sg")
+
+[node name="OuterSpacer" type="Sprite2D" parent="RearFace" unique_id=1390688052]
+position = Vector2(30, 44)
+scale = Vector2(1, 0.9999999)
+texture = ExtResource("4_fajb6")
+
+[node name="BackDecorationU" type="Sprite2D" parent="RearFace" unique_id=898945803]
+position = Vector2(30, 44)
+scale = Vector2(1, 0.99999994)
+texture = ExtResource("5_tsqdd")
+
+[node name="BackDecorationZ" type="Sprite2D" parent="RearFace" unique_id=1016495406]
+position = Vector2(30, 44)
+scale = Vector2(1, 0.99999994)
+texture = ExtResource("6_jhgps")
