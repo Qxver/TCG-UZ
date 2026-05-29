@@ -18,7 +18,6 @@ public partial class Deck : Node2D
 
     public override void _Ready()
     {
-        // Copy exported array into the draw pile and shuffle
         foreach (var card in StartingCards)
             drawPile.Add(card);
 

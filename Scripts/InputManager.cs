@@ -89,7 +89,6 @@ public partial class InputManager : Node2D
             hasDrawnThisTurn = true;
     }
 
-    // Wire this to your End Turn button
     public void OnEndTurn()
     {
         hasDrawnThisTurn = false;

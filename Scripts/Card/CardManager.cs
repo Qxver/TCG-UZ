@@ -46,36 +46,6 @@ public partial class CardManager : Node2D
         	draggedCard.GlobalPosition = draggedCard.GlobalPosition.Lerp(adjustedTarget, 0.5f);
 		}
 	}
-
-	// public override void _Input(InputEvent @event)
-	// {
-
-	// 	if(@event is InputEventMouseButton mouseEvent)
-	// 	{
-	// 		if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == true)
-	// 		{
-	// 			var card = RaycastCheckForCard();
-	// 			if(card != null)
-	// 			{
-	// 				DragStarted(card);
-	// 			}
-				
-	// 		}
-	// 		else if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == false)
-	// 		{
-	// 			if (draggedCard != null)
-    // 			{
-    //     			DragEnded(draggedCard);
-    // 			}
-	// 		}
-	// 	}
-
-
-	// 	if (@event.IsActionPressed("ui_accept"))
-	// 	{
-	// 		GD.Print("Accept button pressed");
-	// 	}
-	// }
 	
 	public void DragStarted(Control card)
 	{
@@ -281,7 +251,6 @@ public partial class CardManager : Node2D
 
 	public void ConnectCardSignals(Card card)
     {
-        // TAK podłącza się sygnały w Godot 4 C#
         card.CardOnHoverEntered += OnCardHoverEntered;
         card.CardOnHoverExited += OnCardHoverExited;
     }
@@ -308,7 +277,6 @@ public partial class CardManager : Node2D
 
 	private void UpdateHoveredHighlight()
 	{
-		// Clean up invalid card references
 		hoveredCards.RemoveAll(c => !GodotObject.IsInstanceValid(c));
 
 		if (draggedCard != null)
