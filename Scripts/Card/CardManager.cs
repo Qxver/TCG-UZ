@@ -4,6 +4,9 @@ using System;
 public partial class CardManager : Node2D
 {
 	[Export] PlayerHand playerHand;
+	[Export] InputManager inputManager;
+	public bool IsDragging() => draggedCard != null;
+	public Control GetDraggedCard() => draggedCard;
 	Control draggedCard = null;
 	Vector2 screenSize;
 	System.Collections.Generic.List<Card> hoveredCards = new System.Collections.Generic.List<Card>();
@@ -13,9 +16,24 @@ public partial class CardManager : Node2D
 	public override void _Ready()
 	{
 		screenSize = GetViewport().GetVisibleRect().Size;
+		if (playerHand == null)
+		{
+			playerHand = GetParent().GetNodeOrNull<PlayerHand>("PlayerHand");
+			if (playerHand == null)
+				GD.PrintErr("CardManager: PlayerHand not found!");
+		}
+
 	}
 
-	public override void _Process(double delta)
+    private void OnLeftMouseButtonReleased()
+    {
+    }
+
+    private void OnLeftMouseButtonPressed()
+    {
+    }
+
+    public override void _Process(double delta)
 	{
 		if(draggedCard != null)
 		{
@@ -26,36 +44,6 @@ public partial class CardManager : Node2D
 			);
 			Vector2 adjustedTarget = targetPos - draggedCard.PivotOffset;
         	draggedCard.GlobalPosition = draggedCard.GlobalPosition.Lerp(adjustedTarget, 0.5f);
-		}
-	}
-
-	public override void _Input(InputEvent @event)
-	{
-
-		if(@event is InputEventMouseButton mouseEvent)
-		{
-			if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == true)
-			{
-				var card = RaycastCheckForCard();
-				if(card != null)
-				{
-					DragStarted(card);
-				}
-				
-			}
-			else if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed == false)
-			{
-				if (draggedCard != null)
-    			{
-        			DragEnded(draggedCard);
-    			}
-			}
-		}
-
-
-		if (@event.IsActionPressed("ui_accept"))
-		{
-			GD.Print("Accept button pressed");
 		}
 	}
 	
@@ -69,7 +57,6 @@ public partial class CardManager : Node2D
 		draggedCard = card;
 		card.Scale = new Vector2(1.0f, 1.0f);
 		card.ZIndex = 2;
-		card.GetParent().MoveChild(card, -1); // To do zmiany w momencie dodania ręki z kartami
 	}
 
 
@@ -79,13 +66,44 @@ public partial class CardManager : Node2D
 		UpdateHoveredHighlight();
 
 		var cardSlotFound = RaycastCheckForCardSlot();
-		if(cardSlotFound is CardSlot slot && !slot.cardInside)
+		if(cardSlotFound is CardSlot slot && !slot.cardInside && slot.isPlayerSlot)
 		{
-			card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
-			slot.cardInside = true;
+			playerHand.RemoveCardFromHand((Card)card);
 
 			if (card is Card cardScript)
 			{
+				int cost = cardScript.Data != null ? cardScript.Data.Cost : 0;
+				if (cost > 0)
+				{
+					var studentsInHand = new System.Collections.Generic.List<Card>();
+					foreach (var c in playerHand.CardsInHand)
+					{
+						if (c != cardScript && c.Data != null && c.Data.Cost == 0)
+						{
+							studentsInHand.Add(c);
+						}
+					}
+
+					if (studentsInHand.Count < cost)
+					{
+						cardScript.ZIndex = 1;
+						playerHand?.AddCardToHand(cardScript);
+						draggedCard = null;
+						return;
+					}
+					else
+					{
+						for (int i = 0; i < cost; i++)
+						{
+							var studentToSpend = studentsInHand[i];
+							playerHand.RemoveCardFromHand(studentToSpend);
+							studentToSpend.QueueFree();
+						}
+					}
+				}
+
+				card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
+				slot.cardInside = true;
 				cardScript.isPlaced = true;
 
 				if (hoveredCards.Contains(cardScript))
@@ -97,9 +115,11 @@ public partial class CardManager : Node2D
 					currentlyHighlightedCard = null;
 				}
 			}
-
-			playerHand.RemoveCardFromHand((Card)card);
-
+			else
+			{
+				card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
+				slot.cardInside = true;
+			}
 
 			var collisionShape = card.GetNodeOrNull<CollisionShape2D>("Area2D/CollisionShape2D");
 			if (collisionShape != null)
@@ -107,7 +127,11 @@ public partial class CardManager : Node2D
 		}
 		else
 		{
-			playerHand.AddCardToHand((Card)card);
+			if (card is Card cardScript)
+			{
+				cardScript.ZIndex = 1;
+			}
+			playerHand?.AddCardToHand((Card)card);
 		}
 		draggedCard = null;
 	}
@@ -227,7 +251,6 @@ public partial class CardManager : Node2D
 
 	public void ConnectCardSignals(Card card)
     {
-        // TAK podłącza się sygnały w Godot 4 C#
         card.CardOnHoverEntered += OnCardHoverEntered;
         card.CardOnHoverExited += OnCardHoverExited;
     }
@@ -254,7 +277,6 @@ public partial class CardManager : Node2D
 
 	private void UpdateHoveredHighlight()
 	{
-		// Clean up invalid card references
 		hoveredCards.RemoveAll(c => !GodotObject.IsInstanceValid(c));
 
 		if (draggedCard != null)
