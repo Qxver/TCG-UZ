@@ -44,35 +44,27 @@ offset_bottom = 86.75
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayButton" type="Button" parent="VBoxContainer" unique_id=1448842657]
+[node name="CollectionMenuButton" type="Button" parent="VBoxContainer" unique_id=590033937]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-text = "Play"
+text = "Card Collection"
 
-[node name="CollectionButton" type="Button" parent="VBoxContainer" unique_id=590033937]
+[node name="OpenCardMenuButton" type="Button" parent="VBoxContainer" unique_id=149876383]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-text = "COLLECTION"
+text = "Open cards"
 
-[node name="Button2" type="Button" parent="VBoxContainer" unique_id=149876383]
+[node name="ExitButton" type="Button" parent="VBoxContainer" unique_id=297077686]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-text = "add card test"
+text = "Exit"
 
-[node name="Button3" type="Button" parent="VBoxContainer" unique_id=297077686]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-text = "EXIT"
-
-[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="OnPlayButtonPressed"]
-[connection signal="pressed" from="VBoxContainer/CollectionButton" to="." method="_on_collection_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/CollectionMenuButton" to="." method="_on_collection_menu_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/OpenCardMenuButton" to="." method="_on_open_card_menu_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

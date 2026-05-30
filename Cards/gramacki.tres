@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_yuixg")
 Id = "8"
-Name = "dr hab. inż. Artur Gramacki, prof. UZ"
+Name = "Artur Gramacki"
+Description = "trit wiolejt"
 Portrait = ExtResource("1_smvjw")
 Rarity = 3
