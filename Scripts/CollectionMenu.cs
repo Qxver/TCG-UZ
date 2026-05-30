@@ -49,7 +49,8 @@ public partial class CollectionMenu : Control
 		{
 			bool isUnlocked = collection.TryGetValue(data.Id, out int amount) && amount > 0;
 
-			var card = Card.Instantiate<Node>();
+			var card = Card.Instantiate<Card>();
+			card.SetCardData(data);
 			Grid.AddChild(card);
 
 			var portrait = card.GetNodeOrNull<Sprite2D>("FrontFace/Portrait");
@@ -59,15 +60,17 @@ public partial class CollectionMenu : Control
 				portrait.Texture = isUnlocked ? data.Portrait : lockedTexture;
 				stats.Visible = isUnlocked;
 			}
-			 else
-			 {
-				 GD.Print($"Nie można znaleźć węzła 'FrontFace/Portrait' dla karty {data.Id}");
-			}
 
 			var frontFace = card.GetNodeOrNull<CanvasItem>("FrontFace");
 			if (frontFace != null && !isUnlocked)
 			{
 				frontFace.Modulate = new Color(0.4f, 0.4f, 0.4f, 1f);
+			}
+			
+			var amountLabel = card.GetNodeOrNull<Label>("AmountLabel");
+			if (amountLabel != null)
+			{
+				amountLabel.Text = isUnlocked ? $"x{amount}" : "";
 			}
 		}
 	}

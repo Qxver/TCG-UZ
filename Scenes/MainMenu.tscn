@@ -1,9 +1,6 @@
 [gd_scene format=3 uid="uid://lovn5wxdy13p"]
 
 [ext_resource type="Script" uid="uid://cfueh8x85b2ei" path="res://Scripts/MainMenu.cs" id="1_tt5f1"]
-[ext_resource type="PackedScene" uid="uid://ds3n31xmbdfht" path="res://Scenes/CardSlot.tscn" id="2_ghw46"]
-[ext_resource type="PackedScene" uid="uid://bs5klrcjxcedh" path="res://Scenes/CardManager.tscn" id="4_df05h"]
-[ext_resource type="PackedScene" uid="uid://c3x6otc11defq" path="res://Scenes/PlayerHand.tscn" id="4_ghw46"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
 bg_color = Color(0.16206557, 0.1620656, 0.16206548, 1)
@@ -67,15 +64,6 @@ size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "Exit"
-
-[node name="CardSlot" parent="." unique_id=29271457 instance=ExtResource("2_ghw46")]
-position = Vector2(81, 60)
-
-[node name="CardManager" parent="." unique_id=1531874455 node_paths=PackedStringArray("playerHand") instance=ExtResource("4_df05h")]
-playerHand = NodePath("../PlayerHand")
-
-[node name="PlayerHand" parent="." unique_id=908504061 node_paths=PackedStringArray("CardManager") instance=ExtResource("4_ghw46")]
-CardManager = NodePath("../CardManager")
 
 [connection signal="pressed" from="VBoxContainer/CollectionMenuButton" to="." method="_on_collection_menu_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/OpenCardMenuButton" to="." method="_on_open_card_menu_button_pressed"]
