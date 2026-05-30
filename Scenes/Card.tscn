@@ -17,6 +17,10 @@
 [sub_resource type="LabelSettings" id="LabelSettings_sj14m"]
 font_size = 8
 
+[sub_resource type="LabelSettings" id="LabelSettings_f3ywt"]
+line_spacing = -2.0
+font_size = 4
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbuqb"]
 size = Vector2(56, 86)
 
@@ -132,6 +136,9 @@ offset_right = 56.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 0
+label_settings = SubResource("LabelSettings_f3ywt")
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="RearFace" type="Control" parent="." unique_id=168671250]
 visible = false

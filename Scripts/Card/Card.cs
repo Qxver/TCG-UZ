@@ -44,9 +44,11 @@ public partial class Card : Control
 	var healthLabel = GetNodeOrNull<Label>("Stats/HealthLabel");
 	var costLabel   = GetNodeOrNull<Label>("Stats/CostLabel");
 	var nameLabel   = GetNodeOrNull<Label>("Stats/NameLabel");
+	var descLabel   = GetNodeOrNull<Label>("Stats/DescriptionLabel");
 	if (attackLabel != null) attackLabel.Text = data.Attack.ToString();
 	if (healthLabel != null) healthLabel.Text = data.Health.ToString();
 	if (costLabel   != null) costLabel.Text   = data.Cost.ToString();
 	if (nameLabel   != null) nameLabel.Text   = data.Name.ToString();
+	if (descLabel   != null) descLabel.Text   = data.Description.ToString();
 }
 }
