@@ -1,21 +1,25 @@
 [gd_scene format=3 uid="uid://bs1teaxiy4lfk"]
 
 [ext_resource type="Script" uid="uid://1kgb3wpfkoib" path="res://Scripts/Card/Card.cs" id="1_f3ywt"]
-[ext_resource type="Texture2D" uid="uid://crwilplwa3mc4" path="res://Sprites/Card/Front/card_front_outer_border.png" id="1_pbuqb"]
-[ext_resource type="Texture2D" uid="uid://dpm43pl4qn7hi" path="res://Sprites/Card/Front/card_color.png" id="2_f3ywt"]
-[ext_resource type="Texture2D" uid="uid://c3am445e5dw1e" path="res://Sprites/Card/Front/card_front_outer_spacer.png" id="3_6elyo"]
-[ext_resource type="Texture2D" uid="uid://dyw874xyd6uie" path="res://Sprites/Card/FullArts/l2_sprite_1.png" id="4_gnfes"]
-[ext_resource type="Texture2D" uid="uid://odyqciqdrs0p" path="res://Sprites/Card/Front/Stats.png" id="5_swj2d"]
-[ext_resource type="Texture2D" uid="uid://cl0dmsim4acic" path="res://Sprites/Card/Back/card_back_color.png" id="6_co2vc"]
-[ext_resource type="Texture2D" uid="uid://dbgvnw5r2n2gx" path="res://Sprites/Card/Back/card_back_outer_border.png" id="7_tayg5"]
-[ext_resource type="Texture2D" uid="uid://dq5n2uifp05ur" path="res://Sprites/Card/Back/card_back_outer_spacer.png" id="8_w84x6"]
-[ext_resource type="Texture2D" uid="uid://d1ooud1xd5vfq" path="res://Sprites/Card/Back/U_positioned.png" id="9_7qgfu"]
-[ext_resource type="Texture2D" uid="uid://qvqcombbix3j" path="res://Sprites/Card/Back/Z_positioned.png" id="10_bnn6f"]
+[ext_resource type="Texture2D" uid="uid://b106ewb5t4ayw" path="res://Sprites/Card/Front/card_front_outer_border.png" id="1_pbuqb"]
+[ext_resource type="Texture2D" uid="uid://c243g6g1mi2wj" path="res://Sprites/Card/Front/card_color.png" id="2_f3ywt"]
+[ext_resource type="Texture2D" uid="uid://dl0jav7svlf86" path="res://Sprites/Card/Front/card_front_outer_spacer.png" id="3_6elyo"]
+[ext_resource type="Texture2D" uid="uid://baog5ug6jow28" path="res://Sprites/Card/Portraits/portrait_hladek.png" id="5_f3ywt"]
+[ext_resource type="Texture2D" uid="uid://c3k4edylru4j3" path="res://Sprites/Card/Front/Stats.png" id="5_swj2d"]
+[ext_resource type="Texture2D" uid="uid://c64mbwcvpi7s7" path="res://Sprites/Card/Back/card_back_color.png" id="6_co2vc"]
+[ext_resource type="Texture2D" uid="uid://c0mw1w6kg81df" path="res://Sprites/Card/Back/card_back_outer_border.png" id="7_tayg5"]
+[ext_resource type="Texture2D" uid="uid://b8s31bd8hqrmb" path="res://Sprites/Card/Back/card_back_outer_spacer.png" id="8_w84x6"]
+[ext_resource type="Texture2D" uid="uid://cn8vri43py8nl" path="res://Sprites/Card/Back/U_positioned.png" id="9_7qgfu"]
+[ext_resource type="Texture2D" uid="uid://dnlrcp41v65de" path="res://Sprites/Card/Back/Z_positioned.png" id="10_bnn6f"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bnspj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sj14m"]
 font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_f3ywt"]
+line_spacing = -2.0
+font_size = 4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbuqb"]
 size = Vector2(56, 86)
@@ -59,7 +63,7 @@ texture = ExtResource("3_6elyo")
 
 [node name="Portrait" type="Sprite2D" parent="FrontFace" unique_id=513252976]
 position = Vector2(30, 44)
-texture = ExtResource("4_gnfes")
+texture = ExtResource("5_f3ywt")
 
 [node name="Stats" type="Control" parent="." unique_id=2012697584]
 anchors_preset = 0
@@ -69,6 +73,17 @@ mouse_filter = 2
 [node name="StatsSprite" type="Sprite2D" parent="Stats" unique_id=67329389]
 position = Vector2(30, 44)
 texture = ExtResource("5_swj2d")
+
+[node name="AttackLabel" type="Label" parent="Stats" unique_id=498907971]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 72.0
+offset_right = 24.0
+offset_bottom = 84.0
+text = "7"
+label_settings = SubResource("LabelSettings_sj14m")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CostLabel" type="Label" parent="Stats" unique_id=503728683]
 layout_mode = 0
@@ -92,16 +107,38 @@ label_settings = SubResource("LabelSettings_sj14m")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AttackLabel" type="Label" parent="Stats" unique_id=498907971]
-layout_mode = 0
-offset_left = 13.0
-offset_top = 72.0
-offset_right = 24.0
-offset_bottom = 84.0
-text = "7"
-label_settings = SubResource("LabelSettings_sj14m")
+[node name="NameLabel" type="Label" parent="Stats" unique_id=1805875968]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = 39.0
+offset_right = 57.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 5
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="Stats" unique_id=2107285597]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 48.0
+offset_right = 56.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_f3ywt")
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="RearFace" type="Control" parent="." unique_id=168671250]
 visible = false
@@ -140,10 +177,21 @@ scale = Vector2(1, 0.99999994)
 texture = ExtResource("10_bnn6f")
 
 [node name="GrabArea" type="Area2D" parent="." unique_id=1709311713]
+visible = false
 position = Vector2(30, 44)
 
 [node name="GrabCollision" type="CollisionShape2D" parent="GrabArea" unique_id=1015481976]
 shape = SubResource("RectangleShape2D_pbuqb")
+
+[node name="AmountLabel" type="Label" parent="." unique_id=843947678]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -23.0
+offset_right = 2.0
+offset_bottom = 23.0
+grow_horizontal = 0
 
 [connection signal="mouse_entered" from="." to="." method="OnGrabAreaEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnGrabAreaExited"]

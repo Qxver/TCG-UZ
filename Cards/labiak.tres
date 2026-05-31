@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("2_0mi3o")
 Id = "9"
-Name = "dr inż. Grzegorz Łabiak"
+Name = "Grzegorz Łabiak"
 Portrait = ExtResource("1_231mj")
 Rarity = 2

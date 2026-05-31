@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bwdr8ifyuchv1"]
+
+[ext_resource type="Script" uid="uid://cklsk6ugjkqa7" path="res://Scripts/OpenCardMenu.cs" id="1_urivm"]
+[ext_resource type="Script" uid="uid://085oot8rcvt4" path="res://Scripts/Card/OpenCardPack.cs" id="2_kdu34"]
+
+[node name="OpenCard" type="Control" unique_id=2048068406 node_paths=PackedStringArray("OpenButton", "CooldownLabel", "ResultPanel", "CardContainer", "PackOpener")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_urivm")
+OpenButton = NodePath("OpenButton")
+CooldownLabel = NodePath("OpenButton/CooldownLabel")
+ResultPanel = NodePath("ResultPanel")
+CardContainer = NodePath("ResultPanel/CardContainer")
+PackOpener = NodePath("OpenCardPack")
+
+[node name="Label" type="Label" parent="." unique_id=169353268]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -81.75
+offset_right = 81.75
+offset_bottom = 41.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "Card Opening"
+
+[node name="BackButton" type="Button" parent="." unique_id=2136404849]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -85.0
+offset_bottom = 37.0
+grow_horizontal = 0
+text = "Back"
+
+[node name="OpenButton" type="Button" parent="." unique_id=1675216520]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -42.5
+offset_top = -102.0
+offset_right = 42.5
+offset_bottom = -65.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Open"
+
+[node name="CooldownLabel" type="Label" parent="OpenButton" unique_id=1898810269]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -42.5
+offset_top = 3.0
+offset_right = 42.5
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+
+[node name="OpenCardPack" type="Node" parent="." unique_id=1122042962]
+script = ExtResource("2_kdu34")
+
+[node name="ResultPanel" type="Control" parent="." unique_id=1470499294]
+anchors_preset = 0
+offset_left = 112.5
+offset_top = 131.5
+offset_right = 112.5
+offset_bottom = 228.5
+
+[node name="CardContainer" type="HBoxContainer" parent="ResultPanel" unique_id=78129131]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -48.5
+offset_right = 415.0
+offset_bottom = 48.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="OpenButton" to="." method="_on_open_button_pressed"]

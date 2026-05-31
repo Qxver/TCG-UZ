@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_8gat0")
 Id = "6"
-Name = "prof. dr hab. inż. Oleksandr Barkalov"
+Name = "Oleksandr Barkalov"
 Description = "template"
 Portrait = ExtResource("1_ja2p6")
 Rarity = 4
