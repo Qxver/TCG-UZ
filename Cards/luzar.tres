@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://41qxpigyucfd"]
+
+[ext_resource type="Texture2D" uid="uid://b6g442wjw641e" path="res://Sprites/Card/Portraits/portrait_anon.png" id="1_2i8t1"]
+[ext_resource type="Script" uid="uid://cikffr7o06n1s" path="res://Scripts/Card/CardData.cs" id="2_wocht"]
+
+[resource]
+script = ExtResource("2_wocht")
+Id = "28"
+Name = "Marcel Luzar"
+Portrait = ExtResource("1_2i8t1")
+Rarity = 2
+Health = 6
+Cost = 2

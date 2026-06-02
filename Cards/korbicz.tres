@@ -5,10 +5,9 @@
 
 [resource]
 script = ExtResource("2_ojo53")
-Id = "3"
-Name = "Józef Korbicz"
-Description = "template"
+Id = "26"
+Name = "Marek Kowal"
 Portrait = ExtResource("1_r6nie")
-Rarity = 4
+Rarity = 3
 Health = 6
 Cost = 2

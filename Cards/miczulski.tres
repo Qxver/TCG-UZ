@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cugntcm22iq2r"]
+
+[ext_resource type="Texture2D" uid="uid://b6g442wjw641e" path="res://Sprites/Card/Portraits/portrait_anon.png" id="1_0fi2s"]
+[ext_resource type="Script" uid="uid://cikffr7o06n1s" path="res://Scripts/Card/CardData.cs" id="2_swfjw"]
+
+[resource]
+script = ExtResource("2_swfjw")
+Id = "15"
+Name = "Wiesław Miczulski"
+Portrait = ExtResource("1_0fi2s")
+Rarity = 3

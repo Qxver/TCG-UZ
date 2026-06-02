@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cp2co046v6n3n"]
+
+[ext_resource type="Texture2D" uid="uid://b6g442wjw641e" path="res://Sprites/Card/Portraits/portrait_anon.png" id="1_e2ga4"]
+[ext_resource type="Script" uid="uid://cikffr7o06n1s" path="res://Scripts/Card/CardData.cs" id="2_afkll"]
+
+[resource]
+script = ExtResource("2_afkll")
+Id = "24"
+Name = "Norbert Łukaniszyn"
+Portrait = ExtResource("1_e2ga4")
