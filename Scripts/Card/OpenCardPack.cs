@@ -29,9 +29,9 @@ public partial class OpenCardPack : Node{
 	int DrawWeightedCard(int rarity) => rarity switch
 	{
 		1 => 40,
-		2 => 30,
-		3 => 20,
-		4 => 10,
+		2 => 20,
+		3 => 10,
+		4 => 5,
 		_ => 1
 	};
 
