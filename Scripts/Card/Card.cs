@@ -35,12 +35,13 @@ public partial class Card : Control
 	public void SetCardData(CardData data)
 	{
 		Data = data;
-		var portrait  = GetNodeOrNull<Sprite2D>("FrontFace/Portrait");
+		var portrait    = GetNodeOrNull<Sprite2D>("FrontFace/Portrait");
 		var attackLabel = GetNodeOrNull<Label>("Stats/AttackLabel");
 		var healthLabel = GetNodeOrNull<Label>("Stats/HealthLabel");
 		var costLabel   = GetNodeOrNull<Label>("Stats/CostLabel");
 		var nameLabel   = GetNodeOrNull<Label>("Stats/NameLabel");
 		var descLabel   = GetNodeOrNull<Label>("Stats/DescriptionLabel");
+		var outerSpacer = GetNodeOrNull<Sprite2D>("FrontFace/OuterSpacer");
 
 		if (portrait    != null) portrait.Texture    = data.Portrait;
 		if (attackLabel != null) attackLabel.Text    = data.Attack.ToString();
@@ -48,5 +49,15 @@ public partial class Card : Control
 		if (costLabel   != null) costLabel.Text      = data.Cost.ToString();
 		if (nameLabel   != null) nameLabel.Text      = data.Name;
 		if (descLabel   != null) descLabel.Text      = data.Description;
+		
+		if (outerSpacer != null)
+		outerSpacer.Modulate = data.Rarity switch
+		{
+			1 => new Color(0.67f, 0.68f, 0.74f),
+			2 => new Color(0.27f, 0.62f, 2.04f),
+			3 => new Color(0.61f, 0.23f, 1.17f),
+			4 => new Color(1.79f, 1.52f, 0.18f),
+			_ => new Color(1f, 1f, 1f)
+		};
 	}
 }
