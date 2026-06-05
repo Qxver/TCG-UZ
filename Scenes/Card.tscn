@@ -57,10 +57,6 @@ material = SubResource("CanvasItemMaterial_bnspj")
 position = Vector2(30, 44)
 texture = ExtResource("2_f3ywt")
 
-[node name="OuterSpacer" type="Sprite2D" parent="FrontFace" unique_id=2074975591]
-position = Vector2(30, 44)
-texture = ExtResource("3_6elyo")
-
 [node name="Portrait" type="Sprite2D" parent="FrontFace" unique_id=513252976]
 position = Vector2(30, 44)
 texture = ExtResource("5_f3ywt")
@@ -192,6 +188,10 @@ offset_left = -23.0
 offset_right = 2.0
 offset_bottom = 23.0
 grow_horizontal = 0
+
+[node name="OuterSpacer" type="Sprite2D" parent="." unique_id=2074975591]
+position = Vector2(30, 44)
+texture = ExtResource("3_6elyo")
 
 [connection signal="mouse_entered" from="." to="." method="OnGrabAreaEntered"]
 [connection signal="mouse_exited" from="." to="." method="OnGrabAreaExited"]

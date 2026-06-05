@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://dbtuffltaa6ng"]
+
+[ext_resource type="Texture2D" uid="uid://b6g442wjw641e" path="res://Sprites/Card/Portraits/portrait_anon.png" id="1_ks4gy"]
+[ext_resource type="Script" uid="uid://cikffr7o06n1s" path="res://Scripts/Card/CardData.cs" id="2_sjevx"]
+
+[resource]
+script = ExtResource("2_sjevx")
+Id = "31"
+Name = "Andrzej Obuchowicz"
+Portrait = ExtResource("1_ks4gy")
+Rarity = 4
+Health = 6
+Cost = 2

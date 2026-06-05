@@ -64,4 +64,5 @@ public partial class CardCollection : Node
 
 		GD.Print("Collection loaded.");
 	}
+	
 }

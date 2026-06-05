@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cwkl5v3kimvgc"]
+
+[ext_resource type="Texture2D" uid="uid://b6g442wjw641e" path="res://Sprites/Card/Portraits/portrait_anon.png" id="1_8hvjl"]
+[ext_resource type="Script" uid="uid://cikffr7o06n1s" path="res://Scripts/Card/CardData.cs" id="2_ak380"]
+
+[resource]
+script = ExtResource("2_ak380")
+Id = "20"
+Name = "Robert Szulim"
+Portrait = ExtResource("1_8hvjl")
+Rarity = 2

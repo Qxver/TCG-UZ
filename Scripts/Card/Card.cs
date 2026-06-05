@@ -41,7 +41,12 @@ public partial class Card : Control
 		var costLabel   = GetNodeOrNull<Label>("Stats/CostLabel");
 		var nameLabel   = GetNodeOrNull<Label>("Stats/NameLabel");
 		var descLabel   = GetNodeOrNull<Label>("Stats/DescriptionLabel");
-		var outerSpacer = GetNodeOrNull<Sprite2D>("FrontFace/OuterSpacer");
+		var outerSpacer = GetNodeOrNull<Sprite2D>("OuterSpacer");
+		
+		if (outerSpacer != null)
+		{
+			outerSpacer.Modulate = GetRarityColor(data.Rarity);
+		} 
 
 		if (portrait    != null) portrait.Texture    = data.Portrait;
 		if (attackLabel != null) attackLabel.Text    = data.Attack.ToString();
@@ -49,15 +54,16 @@ public partial class Card : Control
 		if (costLabel   != null) costLabel.Text      = data.Cost.ToString();
 		if (nameLabel   != null) nameLabel.Text      = data.Name;
 		if (descLabel   != null) descLabel.Text      = data.Description;
-		
-		if (outerSpacer != null)
-		outerSpacer.Modulate = data.Rarity switch
-		{
-			1 => new Color(0.67f, 0.68f, 0.74f),
-			2 => new Color(0.27f, 0.62f, 2.04f),
-			3 => new Color(0.61f, 0.23f, 1.17f),
-			4 => new Color(1.79f, 1.52f, 0.18f),
-			_ => new Color(1f, 1f, 1f)
-		};
 	}
+	
+	public static Color GetRarityColor(int rarity) => rarity switch
+	{
+			1 => new Color(0.6f, 0.6f, 0.6f),
+			2 => new Color(0.2f, 0.6f, 1.0f),
+			3 => new Color(0.6f, 0.2f, 1.0f),
+			4 => new Color(1.0f, 0.8f, 0.0f),
+			_ => new Color(1f, 1f, 1f)
+	};
+		
+	
 }

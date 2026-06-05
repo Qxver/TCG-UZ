@@ -7,7 +7,6 @@
 script = ExtResource("2_8xsm0")
 Id = "4"
 Name = "Piotr Powroźnik"
-Description = "template"
 Portrait = ExtResource("1_pqwo1")
 Rarity = 2
 Attack = 2
