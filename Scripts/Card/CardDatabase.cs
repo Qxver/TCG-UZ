@@ -7,7 +7,7 @@ public partial class CardDatabase : Node{
 	public List<CardData> AllCards = new();
 
 	public override void _Ready()
-    {
+	{
 		Instance = this;
 		LoadCards();
 	}
@@ -16,35 +16,32 @@ public partial class CardDatabase : Node{
 		var dir = DirAccess.Open("res://Cards");
 
 		if (dir == null)
-        {
-            GD.Print("BŁĄD: Nie znaleziono folderu res://Cards!");
+		{
 			return;
-        }
+		}
 
 		dir.ListDirBegin();
-        int loadedCount = 0;
-        
+		int loadedCount = 0;
+		
 		while (true)
-        {
+		{
 			string file = dir.GetNext();
 
 			if (file == "")
 				break;
 
-            GD.Print($"Znaleziono plik w folderze: {file}");
 
 			if (file.EndsWith(".tres"))
-            {
+			{
 				var card = ResourceLoader.Load<CardData>(
 					$"res://Cards/{file}"
 				);
 
 				if (card != null){
 					AllCards.Add(card);
-                    loadedCount++;
-                }
+					loadedCount++;
+				}
 			}
 		}
-        GD.Print($"Pomyślnie załadowano kart z bazy: {loadedCount}");
 	}
 }

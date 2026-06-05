@@ -14,7 +14,7 @@ public partial class CardCollection : Node
 	{
 		Instance = this;
 
-		LoadCollection();
+		LoadCollection();	
 	}
 
 	public void AddCard(CardData card)
@@ -62,7 +62,6 @@ public partial class CardCollection : Node
 
 		cards = JsonSerializer.Deserialize<Dictionary<string, int>>(json);
 
-		GD.Print("Collection loaded.");
 	}
 	
 }
