@@ -5,6 +5,7 @@ public partial class CardManager : Node2D
 {
 	[Export] PlayerHand playerHand;
 	[Export] InputManager inputManager;
+	[Export] Label cardsLeftInDeckLabel;
 	public bool IsDragging() => draggedCard != null;
 	public Control GetDraggedCard() => draggedCard;
 	Control draggedCard = null;

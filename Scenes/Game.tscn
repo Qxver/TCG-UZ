@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bs5klrcjxcedh" path="res://Scenes/CardManager.tscn" id="1_j5yw3"]
 [ext_resource type="PackedScene" uid="uid://c3x6otc11defq" path="res://Scenes/PlayerHand.tscn" id="2_kldst"]
+[ext_resource type="PackedScene" uid="uid://wop4pmhq0cae" path="res://Scenes/EnemyHand.tscn" id="3_4q8tf"]
 [ext_resource type="PackedScene" uid="uid://ds3n31xmbdfht" path="res://Scenes/CardSlot.tscn" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://dvb0nvgk828kb" path="res://Scenes/Deck.tscn" id="4_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://xlrprvx0tm33" path="res://Scenes/InputManager.tscn" id="5_7lihs"]
@@ -14,6 +15,9 @@
 [ext_resource type="Resource" uid="uid://4squtest8k8m" path="res://Cards/gramacki.tres" id="11_wxwew"]
 [ext_resource type="Resource" uid="uid://k7tjisdau6ga" path="res://Cards/card_template.tres" id="12_acvyw"]
 [ext_resource type="Resource" uid="uid://dg7nxqcvdqpia" path="res://Cards/balik.tres" id="13_alh3a"]
+[ext_resource type="Script" uid="uid://4f48squj18q6" path="res://Scripts/BattleManager.cs" id="15_acvyw"]
+[ext_resource type="Script" uid="uid://dqabtdvfjciv8" path="res://Scripts/Card/EnemyDeck.cs" id="15_alh3a"]
+[ext_resource type="Resource" uid="uid://btdtwobjkvdex" path="res://Cards/korbicz.tres" id="17_x3xnh"]
 
 [node name="Game" type="Control" unique_id=1265330324]
 layout_mode = 3
@@ -26,6 +30,10 @@ playerHand = NodePath("../PlayerHand")
 
 [node name="PlayerHand" parent="." unique_id=908504061 node_paths=PackedStringArray("CardManager") instance=ExtResource("2_kldst")]
 position = Vector2(1, 0)
+CardManager = NodePath("../CardManager")
+
+[node name="EnemyHand" parent="." unique_id=25121573 node_paths=PackedStringArray("CardManager") instance=ExtResource("3_4q8tf")]
+position = Vector2(319, -29)
 CardManager = NodePath("../CardManager")
 
 [node name="PlayerSlots" type="Node2D" parent="." unique_id=883146382]
@@ -71,6 +79,13 @@ PlayerHand = NodePath("../PlayerHand")
 CardManager = NodePath("../CardManager")
 StartingCards = Array[ExtResource("6_71axn")]([ExtResource("7_dahhg"), ExtResource("8_3so38"), ExtResource("9_3cx6b"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("11_wxwew"), ExtResource("12_acvyw"), ExtResource("13_alh3a")])
 
+[node name="CardsLeft" type="Label" parent="CharacterDeck" unique_id=113511288]
+offset_left = -42.0
+offset_top = 34.0
+offset_right = -2.0
+offset_bottom = 57.0
+text = "0"
+
 [node name="StudentDeck" parent="." unique_id=1045034594 node_paths=PackedStringArray("PlayerHand", "CardManager") instance=ExtResource("4_b2bpf")]
 position = Vector2(568, 58)
 PlayerHand = NodePath("../PlayerHand")
@@ -79,12 +94,33 @@ StartingCards = Array[ExtResource("6_71axn")]([ExtResource("11_dahhg")])
 IsInfinite = true
 ShowRearFace = false
 
-[node name="Button" type="Button" parent="." unique_id=1276174124]
+[node name="EnemyDeck" parent="." unique_id=14915364 node_paths=PackedStringArray("EnemyHand", "CardManager") instance=ExtResource("4_b2bpf")]
+position = Vector2(72, 148)
+rotation = 3.1415927
+script = ExtResource("15_alh3a")
+EnemyHand = NodePath("../EnemyHand")
+CardManager = NodePath("../CardManager")
+StartingCards = Array[ExtResource("6_71axn")]([ExtResource("13_alh3a"), ExtResource("12_acvyw"), ExtResource("11_wxwew"), ExtResource("7_dahhg"), ExtResource("11_wxwew"), ExtResource("12_acvyw"), ExtResource("17_x3xnh"), ExtResource("11_wxwew"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("17_x3xnh")])
+StudentCardData = ExtResource("11_dahhg")
+SpawnOffset = Vector2(-70, -90)
+
+[node name="EndTurnButton" type="Button" parent="." unique_id=1276174124]
 layout_mode = 0
-offset_left = 546.0
-offset_top = 7.0
-offset_right = 636.0
-offset_bottom = 38.0
+offset_left = 463.0
+offset_top = 136.0
+offset_right = 553.0
+offset_bottom = 167.0
 text = "END TURN"
 
-[connection signal="pressed" from="Button" to="InputManageer" method="OnEndTurn"]
+[node name="BattleManager" type="Node" parent="." unique_id=1349120235 node_paths=PackedStringArray("InputManager", "EnemyHand", "EnemyDeck", "EnemySlots", "BattleTimer", "EndTurnButton")]
+script = ExtResource("15_acvyw")
+InputManager = NodePath("../InputManageer")
+EnemyHand = NodePath("../EnemyHand")
+EnemyDeck = NodePath("../EnemyDeck")
+EnemySlots = NodePath("../EnemySlots")
+BattleTimer = NodePath("../BattleTimer")
+EndTurnButton = NodePath("../EndTurnButton")
+
+[node name="BattleTimer" type="Timer" parent="." unique_id=1533543387]
+
+[connection signal="pressed" from="EndTurnButton" to="BattleManager" method="OnEndTurn"]

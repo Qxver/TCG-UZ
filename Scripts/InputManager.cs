@@ -21,19 +21,6 @@ public partial class InputManager : Node2D
             if (cardManager == null)
                 GD.PrintErr("InputManager: CardManager not found!");
         }
-
-        CallDeferred(MethodName.DrawStartingHand);
-    }
-
-    private void DrawStartingHand()
-    {
-        for (int i = 0; i < StartingHandSize; i++)
-        {
-            if (CharacterDeck != null)
-            {
-                CharacterDeck.DrawCard();
-            }
-        }
     }
 
     public override void _Input(InputEvent @event)
@@ -53,28 +40,28 @@ public partial class InputManager : Node2D
     }
 
     public void RaycastAtCursor()
-{
-    var card = cardManager?.RaycastCheckForCard();
-    if (card != null)
     {
-        cardManager.DragStarted(card);
-        return;
+        var card = cardManager?.RaycastCheckForCard();
+        if (card != null)
+        {
+            cardManager.DragStarted(card);
+            return;
+        }
+
+        var spaceState = GetWorld2D().DirectSpaceState;
+        var parameters = new PhysicsPointQueryParameters2D
+        {
+            Position = GetGlobalMousePosition(),
+            CollideWithAreas = true,
+            CollisionMask = deckLayerMask
+        };
+
+        var result = spaceState.IntersectPoint(parameters);
+        if (result.Count == 0) return;
+
+        result[0].TryGetValue("collider", out var resultCollision);
+        TryDrawFromDeck(((Area2D)resultCollision).GetParent<Deck>());
     }
-
-    var spaceState = GetWorld2D().DirectSpaceState;
-    var parameters = new PhysicsPointQueryParameters2D
-    {
-        Position = GetGlobalMousePosition(),
-        CollideWithAreas = true,
-        CollisionMask = deckLayerMask
-    };
-
-    var result = spaceState.IntersectPoint(parameters);
-    if (result.Count == 0) return;
-
-    result[0].TryGetValue("collider", out var resultCollision);
-    TryDrawFromDeck(((Area2D)resultCollision).GetParent<Deck>());
-}
 
     private void TryDrawFromDeck(Deck deck)
     {
@@ -87,9 +74,15 @@ public partial class InputManager : Node2D
             hasDrawnThisTurn = true;
     }
 
+
+   public void OnStartTurn()
+    {
+        hasDrawnThisTurn = false;
+    }
+
     public void OnEndTurn()
     {
         hasDrawnThisTurn = false;
-        GD.Print("Turn ended.");
+        GD.Print("Player turn ended.");
     }
 }
