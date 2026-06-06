@@ -84,22 +84,24 @@ public partial class BattleManager : Node
         BattleTimer.Start();
     }
 
-    private void OnEnemyThinkFinished()
+    private async void OnEnemyThinkFinished()
     {
         PlayEnemyCard();
-        ResolveCombat();
+        await ResolveCombat();
         CheckWinCondition();
         StartPlayerTurn();
     }
 
     // ── Combat ───────────────────────────────────────────────────
 
-    private void ResolveCombat()
+    private async System.Threading.Tasks.Task ResolveCombat()
     {
         var playerSlotList = GetSlotsInOrder(PlayerSlots);
         var enemySlotList  = GetSlotsInOrder(EnemySlots);
 
         int count = Mathf.Min(playerSlotList.Count, enemySlotList.Count);
+
+        await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
 
         for (int i = 0; i < count; i++)
         {
@@ -109,41 +111,72 @@ public partial class BattleManager : Node
             bool hasPlayer = !playerSlot.IsEmpty() && playerSlot.OccupyingCard != null;
             bool hasEnemy  = !enemySlot.IsEmpty()  && enemySlot.OccupyingCard  != null;
 
-            if (hasPlayer && hasEnemy)
+            if (hasPlayer || hasEnemy)
             {
-                var playerCard = playerSlot.OccupyingCard;
-                var enemyCard  = enemySlot.OccupyingCard;
+                if (hasPlayer) 
+                {
+                    var tween = GetTree().CreateTween();
+                    tween.TweenProperty(playerSlot.OccupyingCard, "position", playerSlot.OccupyingCard.Position + new Vector2(0, -30), 0.15f);
+                    tween.TweenProperty(playerSlot.OccupyingCard, "position", playerSlot.OccupyingCard.Position, 0.15f);
+                }
+                if (hasEnemy) 
+                {
+                    var tween = GetTree().CreateTween();
+                    tween.TweenProperty(enemySlot.OccupyingCard, "position", enemySlot.OccupyingCard.Position + new Vector2(0, 30), 0.15f);
+                    tween.TweenProperty(enemySlot.OccupyingCard, "position", enemySlot.OccupyingCard.Position, 0.15f);
+                }
 
-                bool playerDies = enemyCard.TakeDamage(playerCard.Data.Attack);
-                bool enemyDies  = playerCard.TakeDamage(enemyCard.Data.Attack);
+                await ToSignal(GetTree().CreateTimer(0.15f), "timeout");
 
-                GD.Print($"Combat: {playerCard.Data.Name} ({playerCard.Data.Attack} atk) vs {enemyCard.Data.Name} ({enemyCard.Data.Attack} atk)");
+                if (hasPlayer && hasEnemy)
+                {
+                    var playerCard = playerSlot.OccupyingCard;
+                    var enemyCard  = enemySlot.OccupyingCard;
 
-                if (playerDies) KillCard(playerSlot);
-                if (enemyDies)  KillCard(enemySlot);
-            }
-            else if (hasPlayer && !hasEnemy)
-            {
-                int dmg = playerSlot.OccupyingCard.Data.Attack;
-                enemyHealth -= dmg;
-                GD.Print($"{playerSlot.OccupyingCard.Data.Name} hits enemy for {dmg}. Enemy HP: {enemyHealth}");
-            }
-            else if (!hasPlayer && hasEnemy)
-            {
-                int dmg = enemySlot.OccupyingCard.Data.Attack;
-                playerHealth -= dmg;
-                GD.Print($"{enemySlot.OccupyingCard.Data.Name} hits player for {dmg}. Player HP: {playerHealth}");
+                    // FIX: Assigned to correct boolean variables
+                    bool enemyDies  = enemyCard.TakeDamage(playerCard.Data.Attack);
+                    bool playerDies = playerCard.TakeDamage(enemyCard.Data.Attack);
+
+                    GD.Print($"Combat: {playerCard.Data.Name} ({playerCard.Data.Attack} atk) vs {enemyCard.Data.Name} ({enemyCard.Data.Attack} atk)");
+
+                    if (playerDies) KillCard(playerSlot);
+                    if (enemyDies)  KillCard(enemySlot);
+                }
+                else if (hasPlayer && !hasEnemy)
+                {
+                    int dmg = playerSlot.OccupyingCard.Data.Attack;
+                    enemyHealth -= dmg;
+                    GD.Print($"{playerSlot.OccupyingCard.Data.Name} hits enemy for {dmg}. Enemy HP: {enemyHealth}");
+                }
+                else if (!hasPlayer && hasEnemy)
+                {
+                    int dmg = enemySlot.OccupyingCard.Data.Attack;
+                    playerHealth -= dmg;
+                    GD.Print($"{enemySlot.OccupyingCard.Data.Name} hits player for {dmg}. Player HP: {playerHealth}");
+                }
+
+                UpdateHealthLabels();
+                
+                await ToSignal(GetTree().CreateTimer(0.35f), "timeout");
             }
         }
-
-        UpdateHealthLabels();
+        
+        await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
     }
 
     private void KillCard(CardSlot slot)
     {
         if (slot.OccupyingCard == null) return;
         GD.Print($"{slot.OccupyingCard.Data.Name} dies.");
-        slot.OccupyingCard.QueueFree();
+        
+        var tween = GetTree().CreateTween();
+        tween.TweenProperty(slot.OccupyingCard, "modulate:a", 0.0f, 0.2f);
+        tween.TweenCallback(Callable.From(() => {
+            if (GodotObject.IsInstanceValid(slot.OccupyingCard)) {
+                slot.OccupyingCard.QueueFree();
+            }
+        }));
+        
         slot.ClearSlot();
     }
 
