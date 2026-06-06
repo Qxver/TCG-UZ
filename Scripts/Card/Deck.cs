@@ -66,6 +66,8 @@ public partial class Deck : Node2D
 		var card = cardScene.Instantiate<Card>();
 		CardManager.AddChild(card);
 		card.SetCardData(cardData);
+
+		card.InitCombatStats();
 		
 		card.GlobalPosition = this.GlobalPosition;
 		card.SetFaceDown(true);

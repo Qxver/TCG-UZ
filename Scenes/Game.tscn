@@ -102,7 +102,7 @@ EnemyHand = NodePath("../EnemyHand")
 CardManager = NodePath("../CardManager")
 StartingCards = Array[ExtResource("6_71axn")]([ExtResource("13_alh3a"), ExtResource("12_acvyw"), ExtResource("11_wxwew"), ExtResource("7_dahhg"), ExtResource("11_wxwew"), ExtResource("12_acvyw"), ExtResource("17_x3xnh"), ExtResource("11_wxwew"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("17_x3xnh")])
 StudentCardData = ExtResource("11_dahhg")
-SpawnOffset = Vector2(-70, -90)
+SpawnOffset = Vector2(-75, -90)
 
 [node name="EndTurnButton" type="Button" parent="." unique_id=1276174124]
 layout_mode = 0
@@ -112,15 +112,32 @@ offset_right = 553.0
 offset_bottom = 167.0
 text = "END TURN"
 
-[node name="BattleManager" type="Node" parent="." unique_id=1349120235 node_paths=PackedStringArray("InputManager", "EnemyHand", "EnemyDeck", "EnemySlots", "BattleTimer", "EndTurnButton")]
+[node name="BattleManager" type="Node" parent="." unique_id=1349120235 node_paths=PackedStringArray("InputManager", "EnemyHand", "EnemyDeck", "EnemySlots", "PlayerSlots", "BattleTimer", "EndTurnButton", "PlayerHealthLabel", "EnemyHealthLabel")]
 script = ExtResource("15_acvyw")
 InputManager = NodePath("../InputManageer")
 EnemyHand = NodePath("../EnemyHand")
 EnemyDeck = NodePath("../EnemyDeck")
 EnemySlots = NodePath("../EnemySlots")
+PlayerSlots = NodePath("../PlayerSlots")
 BattleTimer = NodePath("../BattleTimer")
 EndTurnButton = NodePath("../EndTurnButton")
+PlayerHealthLabel = NodePath("../PlayerHealth")
+EnemyHealthLabel = NodePath("../EnemyHealth")
 
 [node name="BattleTimer" type="Timer" parent="." unique_id=1533543387]
+
+[node name="EnemyHealth" type="Label" parent="." unique_id=1732891089]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 92.0
+offset_right = 184.0
+offset_bottom = 115.0
+
+[node name="PlayerHealth" type="Label" parent="." unique_id=823509848]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 191.0
+offset_right = 177.0
+offset_bottom = 214.0
 
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="OnEndTurn"]

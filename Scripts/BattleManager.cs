@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 public enum TurnState { PlayerTurn, EnemyTurn }
 
@@ -8,11 +9,19 @@ public partial class BattleManager : Node
     [Export] public EnemyHand EnemyHand;
     [Export] public EnemyDeck EnemyDeck;
     [Export] public Node2D EnemySlots;
+    [Export] public Node2D PlayerSlots;
     [Export] public Timer BattleTimer;
     [Export] public Button EndTurnButton;
+    [Export] public Label PlayerHealthLabel;
+    [Export] public Label EnemyHealthLabel;
 
     [Export] public int StartingCharacterCards = 5;
     [Export] public int StartingStudentCards = 0;
+    [Export] public int PlayerMaxHealth = 20;
+    [Export] public int EnemyMaxHealth = 20;
+
+    private int playerHealth;
+    private int enemyHealth;
 
     public TurnState CurrentTurn { get; private set; } = TurnState.PlayerTurn;
 
@@ -20,12 +29,16 @@ public partial class BattleManager : Node
 
     public override void _Ready()
     {
+        playerHealth = PlayerMaxHealth;
+        enemyHealth = EnemyMaxHealth;
+        UpdateHealthLabels();
+
         BattleTimer.Timeout += OnEnemyThinkFinished;
 
         for (int i = 0; i < StartingCharacterCards; i++)
             EnemyDeck.DrawCharacterCard();
         for (int i = 0; i < StartingStudentCards; i++)
-            EnemyDeck.DrawStudentCard(InputManager.StudentDeck.GlobalPosition);
+            EnemyDeck.DrawStudentCard();
 
         for (int i = 0; i < StartingCharacterCards; i++)
             InputManager.CharacterDeck.DrawCard();
@@ -60,34 +73,11 @@ public partial class BattleManager : Node
         CurrentTurn = TurnState.EnemyTurn;
         GD.Print("=== ENEMY TURN ===");
 
-        bool needsStudent = false;
-        foreach (var card in EnemyHand.CardsInHand)
-        {
-            if (card.Data != null && card.Data.Cost > 0)
-            {
-                int cost = card.Data.Cost;
-                int students = 0;
-                foreach (var c in EnemyHand.CardsInHand)
-                {
-                    if (c.Data != null && c.Data.Cost == 0)
-                        students++;
-                }
-                if (students < cost)
-                {
-                    needsStudent = true;
-                    break;
-                }
-            }
-        }
-
+        bool needsStudent = EnemyNeedsStudent();
         if (needsStudent || EnemyDeck.RemainingCards == 0)
-        {
-            EnemyDeck.DrawStudentCard(InputManager.StudentDeck.GlobalPosition);
-        }
+            EnemyDeck.DrawStudentCard();
         else
-        {
             EnemyDeck.DrawCharacterCard();
-        }
 
         BattleTimer.WaitTime = EnemyThinkTime;
         BattleTimer.OneShot = true;
@@ -97,69 +87,151 @@ public partial class BattleManager : Node
     private void OnEnemyThinkFinished()
     {
         PlayEnemyCard();
+        ResolveCombat();
+        CheckWinCondition();
         StartPlayerTurn();
     }
 
-    private void PlayEnemyCard()
+    // ── Combat ───────────────────────────────────────────────────
+
+    private void ResolveCombat()
     {
-        EnemyCard cardToPlay = null;
+        var playerSlotList = GetSlotsInOrder(PlayerSlots);
+        var enemySlotList  = GetSlotsInOrder(EnemySlots);
+
+        int count = Mathf.Min(playerSlotList.Count, enemySlotList.Count);
+
+        for (int i = 0; i < count; i++)
+        {
+            var playerSlot = playerSlotList[i];
+            var enemySlot  = enemySlotList[i];
+
+            bool hasPlayer = !playerSlot.IsEmpty() && playerSlot.OccupyingCard != null;
+            bool hasEnemy  = !enemySlot.IsEmpty()  && enemySlot.OccupyingCard  != null;
+
+            if (hasPlayer && hasEnemy)
+            {
+                var playerCard = playerSlot.OccupyingCard;
+                var enemyCard  = enemySlot.OccupyingCard;
+
+                bool playerDies = enemyCard.TakeDamage(playerCard.Data.Attack);
+                bool enemyDies  = playerCard.TakeDamage(enemyCard.Data.Attack);
+
+                GD.Print($"Combat: {playerCard.Data.Name} ({playerCard.Data.Attack} atk) vs {enemyCard.Data.Name} ({enemyCard.Data.Attack} atk)");
+
+                if (playerDies) KillCard(playerSlot);
+                if (enemyDies)  KillCard(enemySlot);
+            }
+            else if (hasPlayer && !hasEnemy)
+            {
+                int dmg = playerSlot.OccupyingCard.Data.Attack;
+                enemyHealth -= dmg;
+                GD.Print($"{playerSlot.OccupyingCard.Data.Name} hits enemy for {dmg}. Enemy HP: {enemyHealth}");
+            }
+            else if (!hasPlayer && hasEnemy)
+            {
+                int dmg = enemySlot.OccupyingCard.Data.Attack;
+                playerHealth -= dmg;
+                GD.Print($"{enemySlot.OccupyingCard.Data.Name} hits player for {dmg}. Player HP: {playerHealth}");
+            }
+        }
+
+        UpdateHealthLabels();
+    }
+
+    private void KillCard(CardSlot slot)
+    {
+        if (slot.OccupyingCard == null) return;
+        GD.Print($"{slot.OccupyingCard.Data.Name} dies.");
+        slot.OccupyingCard.QueueFree();
+        slot.ClearSlot();
+    }
+
+    private List<CardSlot> GetSlotsInOrder(Node2D slotsParent)
+    {
+        var list = new List<CardSlot>();
+        foreach (Node child in slotsParent.GetChildren())
+        {
+            if (child is CardSlot slot)
+                list.Add(slot);
+        }
+        list.Sort((a, b) => a.GlobalPosition.X.CompareTo(b.GlobalPosition.X));
+        return list;
+    }
+
+    // ── Win condition ────────────────────────────────────────────
+
+    private void CheckWinCondition()
+    {
+        if (playerHealth <= 0)
+        {
+            GD.Print("GAME OVER — Enemy wins!");
+            EndTurnButton.Disabled = true;
+            // TODO: show game over screen
+        }
+        else if (enemyHealth <= 0)
+        {
+            GD.Print("VICTORY — Player wins!");
+            EndTurnButton.Disabled = true;
+            // TODO: show victory screen
+        }
+    }
+
+    private void UpdateHealthLabels()
+    {
+        if (PlayerHealthLabel != null) PlayerHealthLabel.Text = $"HP: {playerHealth}";
+        if (EnemyHealthLabel  != null) EnemyHealthLabel.Text  = $"HP: {enemyHealth}";
+    }
+
+    // ── Enemy AI helpers ──────────────────────────
+
+    private bool EnemyNeedsStudent()
+    {
         foreach (var card in EnemyHand.CardsInHand)
         {
             if (card.Data != null && card.Data.Cost > 0)
             {
-                cardToPlay = card;
-                break;
+                int cost = card.Data.Cost;
+                int students = 0;
+                foreach (var c in EnemyHand.CardsInHand)
+                    if (c.Data != null && c.Data.Cost == 0) students++;
+                if (students < cost) return true;
             }
         }
+        return false;
+    }
 
-        if (cardToPlay == null)
-        {
-            GD.Print("Enemy: no character card to play.");
-            return;
-        }
-
-        int cost = cardToPlay.Data.Cost;
-        var students = new System.Collections.Generic.List<EnemyCard>();
+    private void PlayEnemyCard()
+    {
+        Card cardToPlay = null;
         foreach (var card in EnemyHand.CardsInHand)
         {
+            if (card.Data != null && card.Data.Cost > 0) { cardToPlay = card; break; }
+        }
+        if (cardToPlay == null) { GD.Print("Enemy: no character card to play."); return; }
+
+        int cost = cardToPlay.Data.Cost;
+        var students = new List<Card>();
+        foreach (var card in EnemyHand.CardsInHand)
             if (card != cardToPlay && card.Data != null && card.Data.Cost == 0)
                 students.Add(card);
-        }
 
-        if (students.Count < cost)
-        {
-            GD.Print($"Enemy: can't afford '{cardToPlay.Data.Name}' (needs {cost}, has {students.Count} students).");
-            return;
-        }
+        if (students.Count < cost) { GD.Print($"Enemy: can't afford '{cardToPlay.Data.Name}'."); return; }
 
         CardSlot freeSlot = null;
         foreach (Node child in EnemySlots.GetChildren())
-        {
             if (child is CardSlot slot && slot.IsEmpty() && !slot.isPlayerSlot)
-            {
-                freeSlot = slot;
-                break;
-            }
-        }
+            { freeSlot = slot; break; }
 
-        if (freeSlot == null)
-        {
-            GD.Print("Enemy: no free slots.");
-            return;
-        }
+        if (freeSlot == null) { GD.Print("Enemy: no free slots."); return; }
 
-        EnemyHand.RemoveCardFromHand(cardToPlay);
-
-        for (int i = 0; i < cost; i++)
-        {
-            EnemyHand.RemoveCardFromHand(students[i]);
-            students[i].QueueFree();
-        }
+        EnemyHand.RemoveCardFromHand((EnemyCard)cardToPlay);
+        for (int i = 0; i < cost; i++) { EnemyHand.RemoveCardFromHand((EnemyCard)students[i]); students[i].QueueFree(); }
 
         cardToPlay.SetFaceDown(false);
         cardToPlay.GlobalPosition = freeSlot.GlobalPosition - cardToPlay.PivotOffset;
         cardToPlay.isPlaced = true;
-        freeSlot.cardInside = true;
+        freeSlot.PlaceCard(cardToPlay);
 
         GD.Print($"Enemy played: {cardToPlay.Data.Name}");
     }

@@ -104,7 +104,7 @@ public partial class CardManager : Node2D
 				}
 
 				card.GlobalPosition = cardSlotFound.GlobalPosition - card.PivotOffset;
-				slot.cardInside = true;
+				slot.PlaceCard(cardScript);
 				cardScript.isPlaced = true;
 
 				if (hoveredCards.Contains(cardScript))

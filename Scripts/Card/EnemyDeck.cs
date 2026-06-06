@@ -75,6 +75,7 @@ public partial class EnemyDeck : Node2D
         var card = cardScene.Instantiate<EnemyCard>();
         CardManager.AddChild(card);
         card.SetCardData(cardData);
+        card.InitCombatStats();
         card.GlobalPosition = startPos;
         card.SetFaceDown(true);
         card.hasDrawnAnimPlayed = false;

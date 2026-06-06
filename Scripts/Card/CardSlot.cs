@@ -5,16 +5,25 @@ public partial class CardSlot : Node2D
 {
 	[Export] public bool isPlayerSlot = true;
 	public bool cardInside = false;
+	public Card OccupyingCard = null;
+    public bool IsEmpty() => !cardInside;
 
-	public bool IsEmpty()
-	{
-		return !cardInside;
-	}
+    public void PlaceCard(Card card)
+    {
+        cardInside = true;
+        OccupyingCard = card;
+    }
+
+    public void ClearSlot()
+    {
+        cardInside = false;
+        OccupyingCard = null;
+    }
 
 	public void SpawnEnemy()
 	{
 		var cardScene = GD.Load<PackedScene>("res://Scenes/Card.tscn");
-		var cardData = GD.Load<CardData>("res://Cards/hladowski.tres"); // Default enemy
+		var cardData = GD.Load<CardData>("res://Cards/hladowski.tres");
 		if (cardScene != null && cardData != null)
 		{
 			var card = cardScene.Instantiate<Card>();
