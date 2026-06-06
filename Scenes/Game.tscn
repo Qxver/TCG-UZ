@@ -99,7 +99,7 @@ rotation = 3.1415927
 script = ExtResource("15_alh3a")
 EnemyHand = NodePath("../EnemyHand")
 CardManager = NodePath("../CardManager")
-StartingCards = Array[ExtResource("6_71axn")]([ExtResource("13_alh3a"), ExtResource("12_acvyw"), ExtResource("11_wxwew"), ExtResource("7_dahhg"), ExtResource("11_wxwew"), ExtResource("12_acvyw"), ExtResource("17_x3xnh"), ExtResource("11_wxwew"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("17_x3xnh")])
+StartingCards = Array[ExtResource("6_71axn")]([ExtResource("13_alh3a"), ExtResource("17_x3xnh"), ExtResource("11_wxwew"), ExtResource("7_dahhg"), ExtResource("11_wxwew"), ExtResource("10_wxwew"), ExtResource("17_x3xnh"), ExtResource("11_wxwew"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("17_x3xnh")])
 StudentCardData = ExtResource("11_dahhg")
 SpawnOffset = Vector2(-70, -90)
 
