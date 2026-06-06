@@ -21,19 +21,6 @@ public partial class InputManager : Node2D
             if (cardManager == null)
                 GD.PrintErr("InputManager: CardManager not found!");
         }
-
-        CallDeferred(MethodName.DrawStartingHand);
-    }
-
-    private void DrawStartingHand()
-    {
-        for (int i = 0; i < StartingHandSize; i++)
-        {
-            if (CharacterDeck != null)
-            {
-                CharacterDeck.DrawCard();
-            }
-        }
     }
 
     public override void _Input(InputEvent @event)
@@ -87,9 +74,15 @@ public partial class InputManager : Node2D
             hasDrawnThisTurn = true;
     }
 
+    public void OnStartTurn()
+    {
+        hasDrawnThisTurn = false;
+        GD.Print("Player turn started.");
+    }
+
     public void OnEndTurn()
     {
         hasDrawnThisTurn = false;
-        GD.Print("Turn ended.");
+        GD.Print("Player turn ended.");
     }
 }
