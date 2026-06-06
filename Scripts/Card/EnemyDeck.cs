@@ -7,56 +7,78 @@ public partial class EnemyDeck : Node2D
     [Export] public Node2D CardManager;
     [Export] public Godot.Collections.Array<CardData> StartingCards = new();
 
-    private List<CardData> drawPile = new();
+    [Export] public CardData StudentCardData;
+
+    private List<CardData> characterPile = new();
+    private List<CardData> studentPile = new();  
+
     private PackedScene cardScene = GD.Load<PackedScene>("res://Scenes/EnemyCard.tscn");
 
-    public int RemainingCards => drawPile.Count;
+    public int RemainingCards => characterPile.Count;
+
+    [Export] public Vector2 SpawnOffset = Vector2.Zero;
 
     public override void _Ready()
     {
         foreach (var card in StartingCards)
-            drawPile.Add(card);
+            characterPile.Add(card);
 
         Shuffle();
-        GD.Print($"EnemyDeck ready with {drawPile.Count} cards.");
+        GD.Print($"EnemyDeck ready with {characterPile.Count} cards.");
     }
 
-    public void Shuffle()
+    private void Shuffle()
     {
         var rng = new System.Random();
-        for (int i = drawPile.Count - 1; i > 0; i--)
+        for (int i = characterPile.Count - 1; i > 0; i--)
         {
             int j = rng.Next(i + 1);
-            (drawPile[i], drawPile[j]) = (drawPile[j], drawPile[i]);
+            (characterPile[i], characterPile[j]) = (characterPile[j], characterPile[i]);
         }
     }
 
-    public bool DrawCard()
+    public bool DrawCharacterCard()
     {
-        if (drawPile.Count == 0)
+        if (characterPile.Count == 0)
         {
-            GD.Print("EnemyDeck: Empty!");
+            GD.Print("EnemyDeck: No character cards left!");
             return false;
         }
 
-        if (EnemyHand == null || CardManager == null)
+        var cardData = characterPile[0];
+        characterPile.RemoveAt(0);
+        SpawnCard(cardData, this.GlobalPosition + SpawnOffset);
+        GD.Print($"EnemyDeck: Drew character '{cardData.Name}', {characterPile.Count} remaining.");
+        return true;
+    }
+    public bool DrawStudentCard(Godot.Variant startPos = default)
+    {
+        if (StudentCardData == null)
         {
-            GD.PrintErr("EnemyDeck: EnemyHand or CardManager not assigned!");
+            GD.PrintErr("EnemyDeck: StudentCardData not assigned!");
             return false;
         }
 
-        var cardData = drawPile[0];
-        drawPile.RemoveAt(0);
+        Vector2 spawnPos = this.GlobalPosition + SpawnOffset;
+        if (startPos.VariantType == Godot.Variant.Type.Vector2)
+        {
+            spawnPos = startPos.AsVector2();
+        }
 
+        SpawnCard(StudentCardData, spawnPos);
+        GD.Print("EnemyDeck: Drew a student.");
+        return true;
+    }
+
+    private void SpawnCard(CardData cardData, Vector2 startPos)
+    {
         var card = cardScene.Instantiate<EnemyCard>();
         CardManager.AddChild(card);
         card.SetCardData(cardData);
-        card.GlobalPosition = this.GlobalPosition;
-        card.SetFaceDown(true);   // always face-down until played
+        card.GlobalPosition = startPos;
+        card.SetFaceDown(true);
+        card.hasDrawnAnimPlayed = false;
         card.ZIndex = 1;
-
         EnemyHand.AddCardToHand(card);
-        GD.Print($"EnemyDeck: Drew '{cardData.Name}', {drawPile.Count} remaining.");
-        return true;
     }
 }
