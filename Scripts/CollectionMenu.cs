@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Text.Json;
+using System;
 
 public partial class CollectionMenu : Control
 {
@@ -11,7 +12,8 @@ public partial class CollectionMenu : Control
 
 	private static readonly string LockedTexturePath = "res://Sprites/Card/card_locked.png";
 	private const string DECK_SAVE_PATH = "user://Saves/deck.save";
-	private const int MAX_DECK_SIZE = 15;
+	private const int MAX_DECK_SIZE = 20;
+	private const int DISPLAY_DECK_SIZE = 15;
 
 	private bool deckMode = false;
 	private Dictionary<string, int> deckCounts = new();
@@ -38,8 +40,12 @@ public partial class CollectionMenu : Control
 	private void UpdateDeckLabel()
 	{
 		int total = 0;
-		foreach (var v in deckCounts.Values) total += v;
-		DeckSizeLabel.Text = $"{total}/{MAX_DECK_SIZE}";
+		foreach (var (id, count) in deckCounts)
+		{
+			if (id == "0") continue;
+			total += count;
+		}
+		DeckSizeLabel.Text = $"{total}/{DISPLAY_DECK_SIZE}";
 	}
 
 	private void OnCardClicked(CardData data)
@@ -101,6 +107,7 @@ public partial class CollectionMenu : Control
 
 		foreach (var data in allCards)
 		{
+			if (data.Id == "0") continue;
 			bool isUnlocked = collection.TryGetValue(data.Id, out int amount) && amount > 0;
 			deckCounts.TryGetValue(data.Id, out int inDeck);
 			bool isInDeck = inDeck > 0;
@@ -165,7 +172,12 @@ public partial class CollectionMenu : Control
 
 	private void LoadDeck()
 	{
-		if (!FileAccess.FileExists(DECK_SAVE_PATH)) return;
+		if (!FileAccess.FileExists(DECK_SAVE_PATH))
+		{
+			deckCounts["0"] = 5;
+			SaveDeck();
+			return;
+		} 
 		using var file = FileAccess.Open(DECK_SAVE_PATH, FileAccess.ModeFlags.Read);
 		string json = file.GetAsText().Trim();
 		if (string.IsNullOrEmpty(json)) return;

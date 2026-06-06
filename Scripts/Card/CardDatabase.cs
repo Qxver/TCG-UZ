@@ -9,6 +9,7 @@ public partial class CardDatabase : Node{
 	public override void _Ready()
 	{
 		Instance = this;
+		AllCards.RemoveAll(card => card.Id == "0");
 		LoadCards();
 	}
 
