@@ -13,7 +13,6 @@
 [ext_resource type="Resource" uid="uid://cmnl4p5su2tf5" path="res://Cards/barkalov.tres" id="10_wxwew"]
 [ext_resource type="Resource" uid="uid://7j0at6l0t7ub" path="res://Cards/student.tres" id="11_dahhg"]
 [ext_resource type="Resource" uid="uid://4squtest8k8m" path="res://Cards/gramacki.tres" id="11_wxwew"]
-[ext_resource type="Resource" uid="uid://k7tjisdau6ga" path="res://Cards/card_template.tres" id="12_acvyw"]
 [ext_resource type="Resource" uid="uid://dg7nxqcvdqpia" path="res://Cards/balik.tres" id="13_alh3a"]
 [ext_resource type="Script" uid="uid://4f48squj18q6" path="res://Scripts/BattleManager.cs" id="15_acvyw"]
 [ext_resource type="Script" uid="uid://dqabtdvfjciv8" path="res://Scripts/Card/EnemyDeck.cs" id="15_alh3a"]
@@ -77,7 +76,7 @@ cardManager = NodePath("../CardManager")
 position = Vector2(568, 157)
 PlayerHand = NodePath("../PlayerHand")
 CardManager = NodePath("../CardManager")
-StartingCards = Array[ExtResource("6_71axn")]([ExtResource("7_dahhg"), ExtResource("8_3so38"), ExtResource("9_3cx6b"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("11_wxwew"), ExtResource("12_acvyw"), ExtResource("13_alh3a")])
+StartingCards = Array[ExtResource("6_71axn")]([ExtResource("7_dahhg"), ExtResource("8_3so38"), ExtResource("9_3cx6b"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("11_wxwew"), ExtResource("13_alh3a")])
 
 [node name="CardsLeft" type="Label" parent="CharacterDeck" unique_id=113511288]
 offset_left = -42.0

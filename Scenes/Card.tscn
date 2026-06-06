@@ -180,6 +180,7 @@ position = Vector2(30, 44)
 shape = SubResource("RectangleShape2D_pbuqb")
 
 [node name="AmountLabel" type="Label" parent="." unique_id=843947678]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

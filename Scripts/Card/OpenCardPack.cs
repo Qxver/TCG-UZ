@@ -2,31 +2,27 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class OpenCardPack : Node{
+public partial class OpenCardPack : Node
+{
 	[Export] public int CardsPerPack = 5;
 
 	public List<CardData> OpenPack()
 	{
-	var allCards = CardDatabase.Instance.AllCards;
-	var pulled = new List<CardData>();
-	Random random = new();
+		var allCards = CardDatabase.Instance.AllCards;
+		var pulled = new List<CardData>();
+		Random random = new();
 
-	for (int i = 0; i < CardsPerPack; i++)
-	{
-		int index = random.Next(allCards.Count);
-		CardData card = DrawWeightedCard(allCards, random);
-		CardCollection.Instance.AddCard(card);
-		pulled.Add(card);
+		for (int i = 0; i < CardsPerPack; i++)
+		{
+			CardData card = DrawWeightedCard(allCards, random);
+			CardCollection.Instance.AddCard(card);
+			pulled.Add(card);
+		}
+
+		return pulled;
 	}
 
-	return pulled;
-	}
-	
-	private CardData DrawWeightedCard(List<CardData> allCards, Random random)
-{
-	
-	
-	int DrawWeightedCard(int rarity) => rarity switch
+	private int GetWeight(int rarity) => rarity switch
 	{
 		1 => 40,
 		2 => 20,
@@ -35,20 +31,24 @@ public partial class OpenCardPack : Node{
 		_ => 1
 	};
 
-	int totalWeight = 0;
-	foreach (var card in allCards)
-		totalWeight += DrawWeightedCard(card.Rarity);
-
-	int roll = random.Next(totalWeight);
-	int total = 0;
-
-	foreach (var card in allCards)
+	private CardData DrawWeightedCard(List<CardData> allCards, Random random)
 	{
-		total += DrawWeightedCard(card.Rarity);
-		if (roll < total)
-			return card;
-	}
+		var drawPool = allCards.FindAll(c => c.Id != "0");
 
-	return allCards[0];
-}
+		int totalWeight = 0;
+		foreach (var card in drawPool)
+			totalWeight += GetWeight(card.Rarity);
+
+		int roll = random.Next(totalWeight);
+		int cumulative = 0;
+
+		foreach (var card in drawPool)
+		{
+			cumulative += GetWeight(card.Rarity);
+			if (roll < cumulative)
+				return card;
+		}
+
+		return drawPool[0];
+	}
 }
