@@ -13,6 +13,8 @@ public partial class InputManager : Node2D
     const uint cardLayerMask = 1;
     const uint deckLayerMask = 4;
 
+    public bool IsPlayerTurn { get; private set; } = false;
+
     public override void _Ready()
     {
         if (cardManager == null)
@@ -29,6 +31,8 @@ public partial class InputManager : Node2D
         {
             if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
             {
+                if (!IsPlayerTurn) return;
+                
                 RaycastAtCursor();
             }
             else if (mouseEvent.ButtonIndex == MouseButton.Left && !mouseEvent.Pressed)
@@ -78,11 +82,13 @@ public partial class InputManager : Node2D
    public void OnStartTurn()
     {
         hasDrawnThisTurn = false;
+        IsPlayerTurn = true;
     }
 
     public void OnEndTurn()
     {
         hasDrawnThisTurn = false;
+        IsPlayerTurn = false;
         GD.Print("Player turn ended.");
     }
 }
