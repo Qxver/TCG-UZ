@@ -57,11 +57,12 @@ position = Vector2(30, 68)
 texture = ExtResource("5_jhgps")
 
 [node name="RearFace" type="Control" parent="." unique_id=213596897]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(30, 44)
@@ -69,7 +70,7 @@ mouse_filter = 2
 
 [node name="InnerColor" type="Sprite2D" parent="RearFace" unique_id=1316792904]
 modulate = Color(0.55336356, 0.5714368, 0.5504175, 1)
-position = Vector2(30, 44)
+position = Vector2(30, 43)
 scale = Vector2(1, 0.99999994)
 texture = ExtResource("2_d4c6l")
 

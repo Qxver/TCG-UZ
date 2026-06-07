@@ -4,11 +4,13 @@ public partial class Card : Control
 {
 	[Signal] public delegate void CardOnHoverEnteredEventHandler(Card card);
 	[Signal] public delegate void CardOnHoverExitedEventHandler(Card card);
+	
 
 	public bool isPlaced = false;
 	public bool hasDrawnAnimPlayed = false;
 	public Vector2 positionInHand;
 	public CardData Data { get; private set; }
+	public int CurrentHealth { get; private set; }
 
 	public override void _Ready()
 	{
@@ -65,5 +67,18 @@ public partial class Card : Control
 			_ => new Color(1f, 1f, 1f)
 	};
 		
+	
+	public void InitCombatStats()
+	{
+		CurrentHealth = Data.Health;
+	}
+
+	public bool TakeDamage(int amount)
+	{
+		CurrentHealth -= amount;
+		var healthLabel = GetNodeOrNull<Label>("Stats/HealthLabel");
+		if (healthLabel != null) healthLabel.Text = CurrentHealth.ToString();
+		return CurrentHealth <= 0;
+	}
 	
 }

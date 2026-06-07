@@ -79,10 +79,9 @@ CardManager = NodePath("../CardManager")
 StartingCards = Array[ExtResource("6_71axn")]([ExtResource("7_dahhg"), ExtResource("8_3so38"), ExtResource("9_3cx6b"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("11_wxwew"), ExtResource("13_alh3a")])
 
 [node name="CardsLeft" type="Label" parent="CharacterDeck" unique_id=113511288]
-offset_left = -42.0
-offset_top = 34.0
-offset_right = -2.0
-offset_bottom = 57.0
+offset_left = -40.0
+offset_top = 31.0
+offset_bottom = 54.0
 text = "0"
 
 [node name="StudentDeck" parent="." unique_id=1045034594 node_paths=PackedStringArray("PlayerHand", "CardManager") instance=ExtResource("4_b2bpf")]
@@ -101,7 +100,7 @@ EnemyHand = NodePath("../EnemyHand")
 CardManager = NodePath("../CardManager")
 StartingCards = Array[ExtResource("6_71axn")]([ExtResource("13_alh3a"), ExtResource("17_x3xnh"), ExtResource("11_wxwew"), ExtResource("7_dahhg"), ExtResource("11_wxwew"), ExtResource("10_wxwew"), ExtResource("17_x3xnh"), ExtResource("11_wxwew"), ExtResource("10_wxwew"), ExtResource("8_3so38"), ExtResource("17_x3xnh")])
 StudentCardData = ExtResource("11_dahhg")
-SpawnOffset = Vector2(-70, -90)
+SpawnOffset = Vector2(-75, -90)
 
 [node name="EndTurnButton" type="Button" parent="." unique_id=1276174124]
 layout_mode = 0
@@ -111,15 +110,32 @@ offset_right = 553.0
 offset_bottom = 167.0
 text = "END TURN"
 
-[node name="BattleManager" type="Node" parent="." unique_id=1349120235 node_paths=PackedStringArray("InputManager", "EnemyHand", "EnemyDeck", "EnemySlots", "BattleTimer", "EndTurnButton")]
+[node name="BattleManager" type="Node" parent="." unique_id=1349120235 node_paths=PackedStringArray("InputManager", "EnemyHand", "EnemyDeck", "EnemySlots", "PlayerSlots", "BattleTimer", "EndTurnButton", "PlayerHealthLabel", "EnemyHealthLabel")]
 script = ExtResource("15_acvyw")
 InputManager = NodePath("../InputManageer")
 EnemyHand = NodePath("../EnemyHand")
 EnemyDeck = NodePath("../EnemyDeck")
 EnemySlots = NodePath("../EnemySlots")
+PlayerSlots = NodePath("../PlayerSlots")
 BattleTimer = NodePath("../BattleTimer")
 EndTurnButton = NodePath("../EndTurnButton")
+PlayerHealthLabel = NodePath("../PlayerHealth")
+EnemyHealthLabel = NodePath("../EnemyHealth")
 
 [node name="BattleTimer" type="Timer" parent="." unique_id=1533543387]
+
+[node name="EnemyHealth" type="Label" parent="." unique_id=1732891089]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 90.0
+offset_right = 180.0
+offset_bottom = 113.0
+
+[node name="PlayerHealth" type="Label" parent="." unique_id=823509848]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 190.0
+offset_right = 180.0
+offset_bottom = 213.0
 
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="OnEndTurn"]
