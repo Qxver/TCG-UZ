@@ -18,10 +18,20 @@ public partial class Deck : Node2D
 
 	public override void _Ready()
 	{
-		if (UsePlayerSavedDeck && DeckLoader.Instance?.LoadedDeck.Count > 0)
+		if (UsePlayerSavedDeck)
 		{
-			foreach (var card in DeckLoader.Instance.LoadedDeck)
-				drawPile.Add(card);
+			DeckLoader.Instance?.Reload();
+			
+			if (DeckLoader.Instance?.LoadedDeck.Count > 0)
+			{
+				foreach (var card in DeckLoader.Instance.LoadedDeck)
+					drawPile.Add(card);
+			}
+			else
+			{
+				foreach (var card in StartingCards)
+					drawPile.Add(card);
+			}
 		}
 		else
 		{

@@ -17,6 +17,12 @@ public partial class DeckLoader : Node
         LoadedDeck = BuildDeck();
     }
 
+    public void Reload()
+    {
+        LoadedDeck = BuildDeck();
+        GD.Print($"DeckLoader: Reloaded {LoadedDeck.Count} cards.");
+    }
+
     private List<CardData> BuildDeck()
     {
         var result = new List<CardData>();
