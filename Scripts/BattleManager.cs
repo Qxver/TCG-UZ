@@ -139,7 +139,6 @@ public partial class BattleManager : Node
 					var playerCard = playerSlot.OccupyingCard;
 					var enemyCard  = enemySlot.OccupyingCard;
 
-					// FIX: Assigned to correct boolean variables
 					bool enemyDies  = enemyCard.TakeDamage(playerCard.Data.Attack);
 					bool playerDies = playerCard.TakeDamage(enemyCard.Data.Attack);
 

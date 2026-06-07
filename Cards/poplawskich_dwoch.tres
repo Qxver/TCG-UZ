@@ -1,12 +1,11 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://sb1aisu3fw8p"]
 
-[ext_resource type="Texture2D" uid="uid://b6g442wjw641e" path="res://Sprites/Card/Portraits/portrait_anon.png" id="1_f2han"]
-[ext_resource type="Script" uid="uid://cikffr7o06n1s" path="res://Scripts/Card/CardData.cs" id="2_qleo6"]
+[ext_resource type="Texture2D" uid="uid://cl6ini4pd2r8r" path="res://Sprites/Card/FullArts/Poplawskich2.png" id="1_f2han"]
+[ext_resource type="Script" uid="uid://c66ww2dnmyxqs" path="res://Scripts/Card/CardData.cs" id="2_qleo6"]
 
 [resource]
 script = ExtResource("2_qleo6")
 Id = "5"
-Name = "Mat Andrzej Popławski"
 Portrait = ExtResource("1_f2han")
 Rarity = 4
 Attack = 4

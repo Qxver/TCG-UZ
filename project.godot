@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 CardDatabase="*uid://dl6ule08c0k36"
 CardCollection="*uid://bhbqqve3fl7yd"
+DeckLoader="*uid://bogihwocwpnw8"
 
 [display]
 
