@@ -8,5 +8,5 @@ script = ExtResource("2_rojel")
 Id = "27"
 Name = "Bogdan Lipiec"
 Portrait = ExtResource("1_ualkx")
-Health = 6
+Health = 3
 Cost = 2

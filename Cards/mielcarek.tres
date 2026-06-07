@@ -9,3 +9,6 @@ Id = "16"
 Name = "Kamil Mielcarek"
 Portrait = ExtResource("1_g7xng")
 Rarity = 2
+Attack = 2
+Health = 2
+Cost = 2

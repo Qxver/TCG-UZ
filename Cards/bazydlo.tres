@@ -9,3 +9,4 @@ Id = "22"
 Name = "Grzegorz Bazydło"
 Portrait = ExtResource("1_omutp")
 Rarity = 2
+Attack = 2

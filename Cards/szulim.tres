@@ -9,3 +9,6 @@ Id = "20"
 Name = "Robert Szulim"
 Portrait = ExtResource("1_8hvjl")
 Rarity = 2
+Attack = 2
+Health = 2
+Cost = 2

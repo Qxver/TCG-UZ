@@ -9,3 +9,6 @@ Id = "21"
 Name = "Jacek Tkacz"
 Portrait = ExtResource("1_76vle")
 Rarity = 2
+Attack = 2
+Health = 6
+Cost = 3

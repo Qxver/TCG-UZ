@@ -7,6 +7,8 @@
 script = ExtResource("2_yuixg")
 Id = "8"
 Name = "Artur Gramacki"
-Description = "trit wiolejt"
 Portrait = ExtResource("1_smvjw")
 Rarity = 3
+Attack = 2
+Health = 2
+Cost = 2
