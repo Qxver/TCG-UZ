@@ -26,14 +26,6 @@ public partial class CardManager : Node2D
 
 	}
 
-    private void OnLeftMouseButtonReleased()
-    {
-    }
-
-    private void OnLeftMouseButtonPressed()
-    {
-    }
-
     public override void _Process(double delta)
 	{
 		if(draggedCard != null)

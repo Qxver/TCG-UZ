@@ -37,17 +37,6 @@ public partial class CollectionMenu : Control
 		Refresh();
 	}
 
-	private void UpdateDeckLabel()
-	{
-		int total = 0;
-		foreach (var (id, count) in deckCounts)
-		{
-			if (id == "0") continue;
-			total += count;
-		}
-		DeckSizeLabel.Text = $"{total}/{DISPLAY_DECK_SIZE}";
-	}
-
 	private void OnCardClicked(CardData data)
 	{
 		if (!deckMode) return;
@@ -58,17 +47,16 @@ public partial class CollectionMenu : Control
 		deckCounts.TryGetValue(data.Id, out int inDeck);
 
 		int total = 0;
-		foreach (var v in deckCounts.Values) total += v;
+		foreach (var (id, count) in deckCounts)
+			if (id != "0") total += count;
 
-		if (inDeck >= 1 || total >= MAX_DECK_SIZE)
+		if (inDeck >= 1 || total >= DISPLAY_DECK_SIZE)
 		{
 			if (inDeck > 0)
 			{
 				deckCounts[data.Id] = inDeck - 1;
 				if (deckCounts[data.Id] <= 0)
-				{
 					deckCounts.Remove(data.Id);
-				}
 				SaveDeck();
 				UpdateDeckLabel();
 				Refresh();
@@ -80,6 +68,14 @@ public partial class CollectionMenu : Control
 		SaveDeck();
 		UpdateDeckLabel();
 		Refresh();
+	}
+
+	private void UpdateDeckLabel()
+	{
+		int total = 0;
+		foreach (var (id, count) in deckCounts)
+			if (id != "0") total += count;
+		DeckSizeLabel.Text = $"{total}/{DISPLAY_DECK_SIZE}";
 	}
 
 	public void Refresh()
@@ -174,10 +170,9 @@ public partial class CollectionMenu : Control
 	{
 		if (!FileAccess.FileExists(DECK_SAVE_PATH))
 		{
-			deckCounts["0"] = 5;
 			SaveDeck();
 			return;
-		} 
+		}
 		using var file = FileAccess.Open(DECK_SAVE_PATH, FileAccess.ModeFlags.Read);
 		string json = file.GetAsText().Trim();
 		if (string.IsNullOrEmpty(json)) return;
