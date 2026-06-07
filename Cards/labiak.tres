@@ -9,3 +9,6 @@ Id = "9"
 Name = "Grzegorz Łabiak"
 Portrait = ExtResource("1_231mj")
 Rarity = 2
+Attack = 2
+Health = 2
+Cost = 2

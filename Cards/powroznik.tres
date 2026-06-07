@@ -9,4 +9,5 @@ Id = "4"
 Name = "Piotr Powroźnik"
 Portrait = ExtResource("1_pqwo1")
 Rarity = 2
-Attack = 2
+Health = 6
+Cost = 2

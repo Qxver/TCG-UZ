@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://btdtwobjkvdex"]
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://crsljtol06ybq"]
 
 [ext_resource type="Texture2D" uid="uid://b6g442wjw641e" path="res://Sprites/Card/Portraits/portrait_anon.png" id="1_r6nie"]
 [ext_resource type="Script" uid="uid://cikffr7o06n1s" path="res://Scripts/Card/CardData.cs" id="2_ojo53"]
 
 [resource]
 script = ExtResource("2_ojo53")
-Id = "26"
-Name = "Marek Kowal"
+Id = "3"
+Name = "Józef Korbicz"
 Portrait = ExtResource("1_r6nie")
-Rarity = 3
-Health = 6
+Rarity = 4
+Attack = 8
 Cost = 2

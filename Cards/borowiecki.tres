@@ -9,3 +9,5 @@ Id = "23"
 Name = "Piotr Borowiecki"
 Portrait = ExtResource("1_wu77q")
 Rarity = 3
+Health = 4
+Cost = 2

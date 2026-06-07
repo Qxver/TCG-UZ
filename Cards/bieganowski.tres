@@ -9,3 +9,4 @@ Id = "10"
 Name = "Jacek Bieganowski"
 Portrait = ExtResource("1_44lnb")
 Rarity = 2
+Health = 3

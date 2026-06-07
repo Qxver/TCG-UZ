@@ -9,3 +9,6 @@ Id = "13"
 Name = "Tomasz Gratkowski"
 Portrait = ExtResource("1_bmdvf")
 Rarity = 2
+Attack = 2
+Health = 3
+Cost = 3

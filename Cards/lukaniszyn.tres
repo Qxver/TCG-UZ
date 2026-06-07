@@ -8,3 +8,5 @@ script = ExtResource("2_afkll")
 Id = "24"
 Name = "Norbert Łukaniszyn"
 Portrait = ExtResource("1_e2ga4")
+Attack = 3
+Cost = 2

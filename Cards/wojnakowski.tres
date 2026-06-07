@@ -9,5 +9,6 @@ Id = "41"
 Name = "Marcin Wojnakowski"
 Portrait = ExtResource("1_u28ly")
 Rarity = 2
-Health = 6
+Attack = 2
+Health = 3
 Cost = 2

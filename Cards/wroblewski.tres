@@ -9,5 +9,4 @@ Id = "42"
 Name = "Marek Wróblewski"
 Portrait = ExtResource("1_mnmmk")
 Rarity = 2
-Health = 6
-Cost = 2
+Attack = 3

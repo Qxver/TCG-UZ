@@ -9,3 +9,6 @@ Id = "15"
 Name = "Wiesław Miczulski"
 Portrait = ExtResource("1_0fi2s")
 Rarity = 3
+Attack = 3
+Health = 3
+Cost = 3

@@ -9,5 +9,4 @@ Id = "34"
 Name = "Anna Mowna"
 Portrait = ExtResource("1_yubb1")
 Rarity = 2
-Health = 6
-Cost = 2
+Health = 3
