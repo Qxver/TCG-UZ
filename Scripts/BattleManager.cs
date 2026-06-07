@@ -18,8 +18,8 @@ public partial class BattleManager : Node
 
 	[Export] public int StartingCharacterCards = 5;
 	[Export] public int StartingStudentCards = 0;
-	[Export] public int PlayerMaxHealth = 20;
-	[Export] public int EnemyMaxHealth = 20;
+	[Export] public int PlayerMaxHealth = 40;
+	[Export] public int EnemyMaxHealth = 40;
 	
 	[Export] public CanvasLayer GameOverLayer;
 	[Export] public Label ResultLabel;
