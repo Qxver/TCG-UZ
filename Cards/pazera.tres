@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_18p6o")
 Id = "33"
-Name = "Maciej Patan"
+Name = "Marcin Pazera"
 Portrait = ExtResource("1_5g0e1")
 Rarity = 2
 Health = 6
