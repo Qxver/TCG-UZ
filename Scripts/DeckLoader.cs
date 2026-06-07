@@ -8,7 +8,6 @@ public partial class DeckLoader : Node
 
     private const string DECK_SAVE_PATH = "user://Saves/deck.save";
 
-    // Filled on Ready, consumed by Deck.cs
     public List<CardData> LoadedDeck { get; private set; } = new();
 
     public override void _Ready()
@@ -40,10 +39,9 @@ public partial class DeckLoader : Node
         var deckCounts = JsonSerializer.Deserialize<Dictionary<string, int>>(json);
         if (deckCounts == null) return result;
 
-        // CardDatabase must be loaded before this — it's also an autoload so it is
         foreach (var (id, count) in deckCounts)
         {
-            if (id == "0") continue; // skip students, they're added separately
+            if (id == "0") continue; 
 
             var cardData = CardDatabase.Instance.AllCards.Find(c => c.Id == id);
             if (cardData == null)
