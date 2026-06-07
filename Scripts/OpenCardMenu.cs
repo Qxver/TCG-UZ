@@ -11,7 +11,7 @@ public partial class OpenCardMenu : Control
 	[Export] public OpenCardPack PackOpener;
 
 	private const string SAVE_PATH = "user://Saves/cooldown.save";
-	private const double COOLDOWN_TIME = 0.1; // seconds
+	private const double COOLDOWN_TIME = 300.0; // seconds
 	private double timeRemaining = 0;
 	private bool onCooldown = false;
 	private PackedScene cardScene = GD.Load<PackedScene>("res://Scenes/Card.tscn");
