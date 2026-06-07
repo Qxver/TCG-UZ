@@ -16,7 +16,7 @@
 [ext_resource type="Resource" uid="uid://dg7nxqcvdqpia" path="res://Cards/balik.tres" id="13_alh3a"]
 [ext_resource type="Script" uid="uid://4f48squj18q6" path="res://Scripts/BattleManager.cs" id="15_acvyw"]
 [ext_resource type="Script" uid="uid://dqabtdvfjciv8" path="res://Scripts/Card/EnemyDeck.cs" id="15_alh3a"]
-[ext_resource type="Resource" uid="uid://btdtwobjkvdex" path="res://Cards/korbicz.tres" id="17_x3xnh"]
+[ext_resource type="Resource" uid="uid://crsljtol06ybq" path="res://Cards/kowal.tres" id="17_x3xnh"]
 
 [node name="Game" type="Control" unique_id=1265330324]
 layout_mode = 3
@@ -110,7 +110,15 @@ offset_right = 553.0
 offset_bottom = 167.0
 text = "END TURN"
 
-[node name="BattleManager" type="Node" parent="." unique_id=1349120235 node_paths=PackedStringArray("InputManager", "EnemyHand", "EnemyDeck", "EnemySlots", "PlayerSlots", "BattleTimer", "EndTurnButton", "PlayerHealthLabel", "EnemyHealthLabel")]
+[node name="MenuButton" type="Button" parent="." unique_id=1339088731]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 137.0
+offset_right = 177.0
+offset_bottom = 168.0
+text = "MENU"
+
+[node name="BattleManager" type="Node" parent="." unique_id=1349120235 node_paths=PackedStringArray("InputManager", "EnemyHand", "EnemyDeck", "EnemySlots", "PlayerSlots", "BattleTimer", "EndTurnButton", "PlayerHealthLabel", "EnemyHealthLabel", "GameOverLayer", "ResultLabel")]
 script = ExtResource("15_acvyw")
 InputManager = NodePath("../InputManageer")
 EnemyHand = NodePath("../EnemyHand")
@@ -121,6 +129,8 @@ BattleTimer = NodePath("../BattleTimer")
 EndTurnButton = NodePath("../EndTurnButton")
 PlayerHealthLabel = NodePath("../PlayerHealth")
 EnemyHealthLabel = NodePath("../EnemyHealth")
+GameOverLayer = NodePath("../GameOverLayer")
+ResultLabel = NodePath("../GameOverLayer/Panel/ResultLabel")
 
 [node name="BattleTimer" type="Timer" parent="." unique_id=1533543387]
 
@@ -138,4 +148,39 @@ offset_top = 190.0
 offset_right = 180.0
 offset_bottom = 213.0
 
+[node name="GameOverLayer" type="CanvasLayer" parent="." unique_id=392521444]
+layer = 10
+visible = false
+
+[node name="Panel" type="VBoxContainer" parent="GameOverLayer" unique_id=1042876477]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -52.0
+offset_right = 48.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="ResultLabel" type="Label" parent="GameOverLayer/Panel" unique_id=425001733]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="GameOverLayer/Panel" unique_id=126060209]
+layout_mode = 2
+text = "Play again"
+
+[node name="MainMenuButton" type="Button" parent="GameOverLayer/Panel" unique_id=2078806740]
+layout_mode = 2
+text = "Main menu"
+
 [connection signal="pressed" from="EndTurnButton" to="BattleManager" method="OnEndTurn"]
+[connection signal="pressed" from="MenuButton" to="BattleManager" method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="GameOverLayer/Panel/PlayAgainButton" to="BattleManager" method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="GameOverLayer/Panel/MainMenuButton" to="BattleManager" method="_on_main_menu_button_pressed"]
